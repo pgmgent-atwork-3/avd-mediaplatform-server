@@ -6,6 +6,7 @@ import { configService } from './config/config.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { VideoModule } from './video/video.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { VideoModule } from './video/video.module';
       introspection: true,
     }),
     VideoModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

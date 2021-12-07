@@ -2,6 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  id: Int!
+  username: String!
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  profile_picture: String!
+  account_type: String!
+  videos: [Video!]!
+}
+
 type Video {
   id: Float!
   title: String!
@@ -9,6 +21,7 @@ type Video {
   url: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  user: [User!]!
 }
 
 """
@@ -18,12 +31,16 @@ scalar DateTime
 
 type Query {
   video(id: Int!): Video!
+  user(id: Int!): User!
 }
 
 type Mutation {
   createVideo(createVideoInput: CreateVideoInput!): Video!
   updateVideo(updateVideoInput: UpdateVideoInput!): Video!
   removeVideo(id: Int!): Video!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
 }
 
 input CreateVideoInput {
@@ -40,5 +57,26 @@ input UpdateVideoInput {
   url: String
   createdAt: DateTime
   updatedAt: DateTime
+  id: Int!
+}
+
+input CreateUserInput {
+  name: String!
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  profile_picture: Int!
+  account_type: String!
+}
+
+input UpdateUserInput {
+  name: String
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  profile_picture: Int
+  account_type: String
   id: Int!
 }

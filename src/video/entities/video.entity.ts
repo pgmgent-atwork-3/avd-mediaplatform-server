@@ -1,11 +1,13 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { User } from 'src/user/entities/user.entity';
 import {
   PrimaryGeneratedColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
+  Column,
 } from 'typeorm';
 
 @Entity()
@@ -17,12 +19,15 @@ export class Video {
   @Field((type) => Number)
   id: number;
 
+  @Column()
   @Field((type) => String)
   title: string;
 
+  @Column()
   @Field((type) => String)
   description: string;
 
+  @Column()
   @Field((type) => String)
   url: string;
 
@@ -38,9 +43,9 @@ export class Video {
   @Field((type) => Date)
   updatedAt: Date;
 
-  // @OneToMany(User)
-  // @Field((type) => [User])
-  // users: User[];
+  @ManyToOne(() => User, (user) => user.videos)
+  @Field((type) => [User])
+  user: User;
 
   // @ManyToMany(() => Tag, (tag) => tag.videos)
   // @Field((type) => [Tag])

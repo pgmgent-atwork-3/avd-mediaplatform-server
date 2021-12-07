@@ -40,6 +40,8 @@ class ConfigService {
 
       entities: ['dist/**/*.entity{.ts,.js}'],
 
+      autoLoadEntities: true,
+
       migrationsTableName: 'migration',
 
       migrations: ['src/migration/*.ts'],
@@ -47,6 +49,10 @@ class ConfigService {
       cli: {
         migrationsDir: 'src/migration',
       },
+
+      synchronize: true,
+
+      logging: true,
 
       ssl: this.isProduction(),
     };
