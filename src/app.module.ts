@@ -8,6 +8,7 @@ import { join } from 'path';
 import { VideoModule } from './video/video.module';
 import { UserModule } from './user/user.module';
 import { CommentModule } from './comment/comment.module';
+import { TagModule } from './tag/tag.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CommentModule } from './comment/comment.module';
     VideoModule,
     UserModule,
     CommentModule,
+    TagModule,
   ],
   controllers: [AppController],
   providers: [AppService],

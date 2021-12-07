@@ -38,10 +38,16 @@ type Video {
   user: [User!]!
 }
 
+type Tag {
+  id: Int!
+  name: String!
+}
+
 type Query {
   video(id: Int!): Video!
   user(id: Int!): User!
   comment(id: Int!): Comment!
+  tag(id: Int!): Tag!
 }
 
 type Mutation {
@@ -54,6 +60,9 @@ type Mutation {
   createComment(createCommentInput: CreateCommentInput!): Comment!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
   removeComment(id: Int!): Comment!
+  createTag(createTagInput: CreateTagInput!): Tag!
+  updateTag(updateTagInput: UpdateTagInput!): Tag!
+  removeTag(id: Int!): Tag!
 }
 
 input CreateVideoInput {
@@ -104,5 +113,14 @@ input CreateCommentInput {
 input UpdateCommentInput {
   content: String
   userId: Int
+  id: Int!
+}
+
+input CreateTagInput {
+  name: String!
+}
+
+input UpdateTagInput {
+  name: String
   id: Int!
 }
