@@ -38,7 +38,7 @@ class ConfigService {
       password: this.getValue('PG_PASSWORD'),
       database: this.getValue('PG_DATABASE'),
 
-      entities: ['**/*.entity{.ts,.js}'],
+      entities: ['dist/**/*.entity{.ts,.js}'],
 
       migrationsTableName: 'migration',
 

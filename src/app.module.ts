@@ -5,13 +5,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './config/config.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
+import { VideoModule } from './video/video.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      playground: true,
+      introspection: true,
     }),
+    VideoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
