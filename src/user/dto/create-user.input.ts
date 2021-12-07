@@ -3,7 +3,7 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 @InputType()
 export class CreateUserInput {
   @Field(() => String, { nullable: false })
-  name: string;
+  username: string;
 
   @Field(() => String, { nullable: false })
   firstname: string;
@@ -17,7 +17,7 @@ export class CreateUserInput {
   @Field(() => String, { nullable: false })
   password: string;
 
-  @Field(() => Int, { nullable: false })
+  @Field(() => String, { nullable: false })
   profile_picture: string;
 
   @Field(() => String, { nullable: false })

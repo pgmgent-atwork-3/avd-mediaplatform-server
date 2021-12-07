@@ -2,6 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Comment {
+  id: Int!
+  content: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  user: User!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type User {
   id: Int!
   username: String!
@@ -12,6 +25,7 @@ type User {
   profile_picture: String!
   account_type: String!
   videos: [Video!]!
+  comments: [Comment!]!
 }
 
 type Video {
@@ -24,14 +38,10 @@ type Video {
   user: [User!]!
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type Query {
   video(id: Int!): Video!
   user(id: Int!): User!
+  comment(id: Int!): Comment!
 }
 
 type Mutation {
@@ -41,6 +51,9 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
+  createComment(createCommentInput: CreateCommentInput!): Comment!
+  updateComment(updateCommentInput: UpdateCommentInput!): Comment!
+  removeComment(id: Int!): Comment!
 }
 
 input CreateVideoInput {
@@ -63,22 +76,33 @@ input UpdateVideoInput {
 }
 
 input CreateUserInput {
-  name: String!
+  username: String!
   firstname: String!
   lastname: String!
   email: String!
   password: String!
-  profile_picture: Int!
+  profile_picture: String!
   account_type: String!
 }
 
 input UpdateUserInput {
-  name: String
+  username: String
   firstname: String
   lastname: String
   email: String
   password: String
-  profile_picture: Int
+  profile_picture: String
   account_type: String
+  id: Int!
+}
+
+input CreateCommentInput {
+  content: String!
+  userId: Int!
+}
+
+input UpdateCommentInput {
+  content: String
+  userId: Int
   id: Int!
 }

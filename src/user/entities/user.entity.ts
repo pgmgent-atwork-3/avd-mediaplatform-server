@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Video } from 'src/video/entities/video.entity';
+import { Comment } from 'src/comment/entities/comment.entity';
 import { OneToMany, PrimaryGeneratedColumn, Entity, Column } from 'typeorm';
 
 @ObjectType()
@@ -37,8 +38,11 @@ export class User {
   @Field(() => String)
   account_type: string;
 
-  // OneToMany relation with video
   @OneToMany(() => Video, (video) => video.user)
   @Field(() => [Video])
   videos: Video[];
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  @Field(() => [Comment])
+  comments: Comment[];
 }
