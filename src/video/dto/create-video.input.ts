@@ -11,9 +11,12 @@ export class CreateVideoInput {
   @Field()
   url: string;
 
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   createdAt?: Date;
 
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   updatedAt?: Date;
+
+  @Field(() => Int, { nullable: true })
+  userId?: number;
 }

@@ -34,14 +34,14 @@ export class Video {
   @CreateDateColumn({
     type: 'timestamp',
   })
-  @Field((type) => Date)
-  createdAt: Date;
+  @Field((type) => Date, { nullable: true })
+  createdAt?: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
   })
-  @Field((type) => Date)
-  updatedAt: Date;
+  @Field((type) => Date, { nullable: true })
+  updatedAt?: Date;
 
   @ManyToOne(() => User, (user) => user.videos)
   @Field((type) => [User])

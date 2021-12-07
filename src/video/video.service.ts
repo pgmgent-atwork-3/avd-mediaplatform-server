@@ -1,11 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateVideoInput } from './dto/create-video.input';
 import { UpdateVideoInput } from './dto/update-video.input';
+import { Video } from './entities/video.entity';
 
 @Injectable()
 export class VideoService {
+  constructor(
+    @InjectRepository(Video) private videoRepository: Repository<Video>,
+  ) {}
+
   create(createVideoInput: CreateVideoInput) {
-    return 'This action adds a new video';
+    const newVideo = this.videoRepository.create(createVideoInput);
+    return this.videoRepository.save(newVideo);
   }
 
   findAll() {

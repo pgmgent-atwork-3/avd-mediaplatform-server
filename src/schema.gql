@@ -19,8 +19,8 @@ type Video {
   title: String!
   description: String!
   url: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime
+  updatedAt: DateTime
   user: [User!]!
 }
 
@@ -47,8 +47,9 @@ input CreateVideoInput {
   title: String!
   description: String!
   url: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime
+  updatedAt: DateTime
+  userId: Int
 }
 
 input UpdateVideoInput {
@@ -57,6 +58,7 @@ input UpdateVideoInput {
   url: String
   createdAt: DateTime
   updatedAt: DateTime
+  userId: Int
   id: Int!
 }
 
