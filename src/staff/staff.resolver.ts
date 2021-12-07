@@ -13,7 +13,7 @@ export class StaffResolver {
     return this.staffService.create(createStaffInput);
   }
 
-  @Query(() => [Staff], { name: 'staff' })
+  @Query(() => [Staff], { name: 'staffs' })
   findAll() {
     return this.staffService.findAll();
   }

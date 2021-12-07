@@ -60,6 +60,7 @@ type Query {
   user(id: Int!): User!
   comment(id: Int!): Comment!
   tag(id: Int!): Tag!
+  staffs: [Staff!]!
   staff(id: Int!): Staff!
 }
 
