@@ -16,19 +16,19 @@ export class VideoService {
     return this.videoRepository.save(newVideo);
   }
 
-  findAll() {
-    return `This action returns all video`;
+  async findAll() {
+    return await this.videoRepository.find({ relations: ['tags'] });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} video`;
+  async findOne(id: number) {
+    return await this.videoRepository.findOne(id);
   }
 
-  update(id: number, updateVideoInput: UpdateVideoInput) {
-    return `This action updates a #${id} video`;
+  async update(id: number, updateVideoInput: UpdateVideoInput) {
+    return await this.videoRepository.update(id, updateVideoInput);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} video`;
+  async remove(id: number) {
+    return await this.videoRepository.delete(id);
   }
 }
