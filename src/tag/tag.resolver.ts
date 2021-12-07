@@ -32,4 +32,12 @@ export class TagResolver {
   removeTag(@Args('id', { type: () => Int }) id: number) {
     return this.tagService.remove(id);
   }
+
+  @Mutation(() => Tag, { name: 'addTagToVideo' })
+  addTagToVideo(
+    @Args('videoId', { type: () => Int }) videoId: number,
+    @Args('tagId', { type: () => Int }) tagId: number,
+  ) {
+    return this.tagService.addTagToVideo(videoId, tagId);
+  }
 }

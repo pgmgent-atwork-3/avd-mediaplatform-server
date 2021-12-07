@@ -1,7 +1,9 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Video } from 'src/video/entities/video.entity';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
+@Entity()
 export class Tag {
   @PrimaryGeneratedColumn()
   @Field(() => Int)
@@ -10,4 +12,8 @@ export class Tag {
   @Column()
   @Field(() => String)
   name: string;
+
+  @ManyToMany(() => Video, (video) => video.tags)
+  @Field(() => [Video], { nullable: true })
+  videos: Video[];
 }

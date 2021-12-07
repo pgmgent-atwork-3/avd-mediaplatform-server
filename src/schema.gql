@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Tag {
+  id: Int!
+  name: String!
+  videos: [Video!]
+}
+
 type Comment {
   id: Int!
   content: String!
@@ -36,14 +42,11 @@ type Video {
   createdAt: DateTime
   updatedAt: DateTime
   user: [User!]!
-}
-
-type Tag {
-  id: Int!
-  name: String!
+  tags: [Tag!]!
 }
 
 type Query {
+  videos: [Video!]!
   video(id: Int!): Video!
   user(id: Int!): User!
   comment(id: Int!): Comment!
@@ -63,6 +66,7 @@ type Mutation {
   createTag(createTagInput: CreateTagInput!): Tag!
   updateTag(updateTagInput: UpdateTagInput!): Tag!
   removeTag(id: Int!): Tag!
+  addTagToVideo(tagId: Int!, videoId: Int!): Tag!
 }
 
 input CreateVideoInput {

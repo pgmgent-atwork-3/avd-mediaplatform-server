@@ -13,7 +13,7 @@ export class VideoResolver {
     return this.videoService.create(createVideoInput);
   }
 
-  @Query(() => [Video], { name: 'video' })
+  @Query(() => [Video], { name: 'videos' })
   findAll() {
     return this.videoService.findAll();
   }
