@@ -1,6 +1,12 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Tag } from 'src/tag/entities/tag.entity';
-import { Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @ObjectType()
 @Entity()
@@ -8,9 +14,7 @@ export class Live {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field(() => String, { nullable: false })
-  name: string;
-
+  @Column()
   @Field(() => String, { nullable: false })
   title: string;
 

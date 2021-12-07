@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Live } from 'src/live/entities/live.entity';
 import { Video } from 'src/video/entities/video.entity';
 import { Repository } from 'typeorm';
 import { CreateTagInput } from './dto/create-tag.input';
@@ -11,6 +12,7 @@ export class TagService {
   constructor(
     @InjectRepository(Tag) private tagRepository: Repository<Tag>,
     @InjectRepository(Video) private videoRepository: Repository<Video>,
+    @InjectRepository(Live) private liveRepository: Repository<Live>,
   ) {}
 
   create(createTagInput: CreateTagInput) {
@@ -49,6 +51,24 @@ export class TagService {
       return await this.videoRepository.save(foundVideo);
     } else {
       throw new Error('Video or tag not found');
+    }
+  }
+
+  async addTagToLive(liveId: number, tagId: number) {
+    let foundLive = await this.liveRepository.findOne(
+      { id: liveId },
+      { relations: ['tags'] },
+    );
+    let foundTag = await this.tagRepository.findOne({ id: tagId });
+
+    if (foundLive && foundTag) {
+      foundLive.tags = foundLive.tags
+        ? [...foundLive.tags, foundTag]
+        : [foundTag];
+
+      return await this.liveRepository.save(foundLive);
+    } else {
+      throw new Error('Livestream or tag not found');
     }
   }
 }

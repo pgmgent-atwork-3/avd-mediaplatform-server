@@ -3,8 +3,8 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 @InputType()
 export class CreateLiveInput {
   @Field(() => String, { nullable: false })
-  name: string;
+  title: string;
 
   @Field(() => String, { nullable: false })
-  description: string;
+  url: string;
 }

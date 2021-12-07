@@ -3,7 +3,6 @@
 # ------------------------------------------------------
 
 type Live {
-  name: String!
   title: String!
   tags: [Tag!]
 }
@@ -69,6 +68,7 @@ type Query {
   tag(id: Int!): Tag!
   staffs: [Staff!]!
   staff(id: Int!): Staff!
+  lives: [Live!]!
   live(id: Int!): Live!
 }
 
@@ -86,6 +86,7 @@ type Mutation {
   updateTag(updateTagInput: UpdateTagInput!): Tag!
   removeTag(id: Int!): Tag!
   addTagToVideo(tagId: Int!, videoId: Int!): Tag!
+  addTagToLive(tagId: Int!, liveId: Int!): Tag!
   createStaff(createStaffInput: CreateStaffInput!): Staff!
   updateStaff(updateStaffInput: UpdateStaffInput!): Staff!
   removeStaff(id: Int!): Staff!
@@ -172,12 +173,12 @@ input UpdateStaffInput {
 }
 
 input CreateLiveInput {
-  name: String!
-  description: String!
+  title: String!
+  url: String!
 }
 
 input UpdateLiveInput {
-  name: String
-  description: String
+  title: String
+  url: String
   id: Int!
 }

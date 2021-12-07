@@ -13,7 +13,7 @@ export class LiveResolver {
     return this.liveService.create(createLiveInput);
   }
 
-  @Query(() => [Live], { name: 'live' })
+  @Query(() => [Live], { name: 'lives' })
   findAll() {
     return this.liveService.findAll();
   }

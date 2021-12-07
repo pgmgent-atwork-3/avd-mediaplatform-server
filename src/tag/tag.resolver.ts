@@ -40,4 +40,12 @@ export class TagResolver {
   ) {
     return this.tagService.addTagToVideo(videoId, tagId);
   }
+
+  @Mutation(() => Tag, { name: 'addTagToLive' })
+  addTagToLive(
+    @Args('liveId', { type: () => Int }) liveId: number,
+    @Args('tagId', { type: () => Int }) tagId: number,
+  ) {
+    return this.tagService.addTagToLive(liveId, tagId);
+  }
 }
