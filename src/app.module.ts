@@ -9,6 +9,7 @@ import { VideoModule } from './video/video.module';
 import { UserModule } from './user/user.module';
 import { CommentModule } from './comment/comment.module';
 import { TagModule } from './tag/tag.module';
+import { StaffModule } from './staff/staff.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { TagModule } from './tag/tag.module';
     UserModule,
     CommentModule,
     TagModule,
+    StaffModule,
   ],
   controllers: [AppController],
   providers: [AppService],

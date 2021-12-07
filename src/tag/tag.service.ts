@@ -51,22 +51,4 @@ export class TagService {
       throw new Error('Video or tag not found');
     }
   }
-
-  async addTagToVideo(videoId: number, tagId: number) {
-    let foundVideo = await this.videoRepository.findOne(
-      { id: videoId },
-      { relations: ['tags'] },
-    );
-    let foundTag = await this.tagRepository.findOne({ id: tagId });
-
-    if (foundVideo && foundTag) {
-      foundVideo.tags = foundVideo.tags
-        ? [...foundVideo.tags, foundTag]
-        : [foundTag];
-
-      return await this.videoRepository.save(foundVideo);
-    } else {
-      throw new Error('Video or tag not found');
-    }
-  }
 }

@@ -45,12 +45,22 @@ type Video {
   tags: [Tag!]!
 }
 
+type Staff {
+  id: Int!
+  username: String!
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+}
+
 type Query {
   videos: [Video!]!
   video(id: Int!): Video!
   user(id: Int!): User!
   comment(id: Int!): Comment!
   tag(id: Int!): Tag!
+  staff(id: Int!): Staff!
 }
 
 type Mutation {
@@ -67,6 +77,9 @@ type Mutation {
   updateTag(updateTagInput: UpdateTagInput!): Tag!
   removeTag(id: Int!): Tag!
   addTagToVideo(tagId: Int!, videoId: Int!): Tag!
+  createStaff(createStaffInput: CreateStaffInput!): Staff!
+  updateStaff(updateStaffInput: UpdateStaffInput!): Staff!
+  removeStaff(id: Int!): Staff!
 }
 
 input CreateVideoInput {
@@ -126,5 +139,22 @@ input CreateTagInput {
 
 input UpdateTagInput {
   name: String
+  id: Int!
+}
+
+input CreateStaffInput {
+  username: String!
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+}
+
+input UpdateStaffInput {
+  username: String
+  firstname: String
+  lastname: String
+  email: String
+  password: String
   id: Int!
 }
