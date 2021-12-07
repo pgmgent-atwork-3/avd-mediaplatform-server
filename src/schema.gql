@@ -2,10 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Live {
+  name: String!
+  title: String!
+  tags: [Tag!]
+}
+
 type Tag {
   id: Int!
   name: String!
   videos: [Video!]
+  lives: [Live!]
 }
 
 type Comment {
@@ -62,6 +69,7 @@ type Query {
   tag(id: Int!): Tag!
   staffs: [Staff!]!
   staff(id: Int!): Staff!
+  live(id: Int!): Live!
 }
 
 type Mutation {
@@ -81,6 +89,9 @@ type Mutation {
   createStaff(createStaffInput: CreateStaffInput!): Staff!
   updateStaff(updateStaffInput: UpdateStaffInput!): Staff!
   removeStaff(id: Int!): Staff!
+  createLive(createLiveInput: CreateLiveInput!): Live!
+  updateLive(updateLiveInput: UpdateLiveInput!): Live!
+  removeLive(id: Int!): Live!
 }
 
 input CreateVideoInput {
@@ -157,5 +168,16 @@ input UpdateStaffInput {
   lastname: String
   email: String
   password: String
+  id: Int!
+}
+
+input CreateLiveInput {
+  name: String!
+  description: String!
+}
+
+input UpdateLiveInput {
+  name: String
+  description: String
   id: Int!
 }

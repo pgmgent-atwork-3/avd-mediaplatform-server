@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { CommentModule } from './comment/comment.module';
 import { TagModule } from './tag/tag.module';
 import { StaffModule } from './staff/staff.module';
+import { LiveModule } from './live/live.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { StaffModule } from './staff/staff.module';
     CommentModule,
     TagModule,
     StaffModule,
+    LiveModule,
   ],
   controllers: [AppController],
   providers: [AppService],
