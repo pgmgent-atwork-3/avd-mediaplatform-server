@@ -12,6 +12,7 @@ import { TagModule } from './tag/tag.module';
 import { StaffModule } from './staff/staff.module';
 import { LiveModule } from './live/live.module';
 import { AudioModule } from './audio/audio.module';
+import { AudioPictureModule } from './audio-picture/audio-picture.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AudioModule } from './audio/audio.module';
     StaffModule,
     LiveModule,
     AudioModule,
+    AudioPictureModule,
   ],
   controllers: [AppController],
   providers: [AppService],

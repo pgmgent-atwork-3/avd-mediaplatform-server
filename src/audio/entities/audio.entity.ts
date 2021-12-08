@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { AudioPicture } from 'src/audio-picture/entities/audio-picture.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
 import {
   Column,
@@ -6,6 +7,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -35,6 +37,13 @@ export class Audio {
   @UpdateDateColumn()
   @Field(() => Date)
   updated_at: Date;
+
+  @ManyToOne(() => AudioPicture, (audiopicture) => audiopicture.audios)
+  @Field(() => AudioPicture)
+  audio_picture: AudioPicture;
+
+  @Column({ type: 'int', name: 'audioPictureId' })
+  audio_picture_id: number;
 
   @ManyToMany(() => Tag, (tag) => tag.audios, { cascade: true })
   @JoinTable({

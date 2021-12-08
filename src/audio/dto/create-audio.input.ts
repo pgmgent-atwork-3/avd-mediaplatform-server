@@ -8,6 +8,9 @@ export class CreateAudioInput {
   @Field(() => String)
   description: string;
 
+  @Field(() => Int)
+  audioPictureId: number;
+
   @Field(() => String)
   soundcloud_url: string;
 }
