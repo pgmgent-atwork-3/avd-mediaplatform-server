@@ -29,6 +29,15 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Audio {
+  title: String!
+  description: String!
+  soundcloud_url: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+  tags: [Tag!]!
+}
+
 type Live {
   title: String!
   tags: [Tag!]
@@ -39,6 +48,7 @@ type Tag {
   name: String!
   videos: [Video!]
   lives: [Live!]
+  audios: [Audio!]
 }
 
 type Video {
@@ -73,6 +83,7 @@ type Query {
   staff(id: Int!): Staff!
   lives: [Live!]!
   live(id: Int!): Live!
+  audio(id: Int!): Audio!
 }
 
 type Mutation {
@@ -96,6 +107,9 @@ type Mutation {
   createLive(createLiveInput: CreateLiveInput!): Live!
   updateLive(updateLiveInput: UpdateLiveInput!): Live!
   removeLive(id: Int!): Live!
+  createAudio(createAudioInput: CreateAudioInput!): Audio!
+  updateAudio(updateAudioInput: UpdateAudioInput!): Audio!
+  removeAudio(id: Int!): Audio!
 }
 
 input CreateVideoInput {
@@ -185,5 +199,18 @@ input CreateLiveInput {
 input UpdateLiveInput {
   title: String
   url: String
+  id: Int!
+}
+
+input CreateAudioInput {
+  title: String!
+  description: String!
+  soundcloud_url: String!
+}
+
+input UpdateAudioInput {
+  title: String
+  description: String
+  soundcloud_url: String
   id: Int!
 }

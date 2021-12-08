@@ -11,6 +11,7 @@ import { CommentModule } from './comment/comment.module';
 import { TagModule } from './tag/tag.module';
 import { StaffModule } from './staff/staff.module';
 import { LiveModule } from './live/live.module';
+import { AudioModule } from './audio/audio.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { LiveModule } from './live/live.module';
     TagModule,
     StaffModule,
     LiveModule,
+    AudioModule,
   ],
   controllers: [AppController],
   providers: [AppService],
