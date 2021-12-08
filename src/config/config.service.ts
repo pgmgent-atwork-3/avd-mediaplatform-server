@@ -23,11 +23,6 @@ class ConfigService {
     return this.getValue('PORT', true);
   }
 
-  public isProduction() {
-    const mode = this.getValue('MODE', false);
-    return mode != 'DEV';
-  }
-
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
       type: 'postgres',
@@ -38,7 +33,9 @@ class ConfigService {
       password: this.getValue('PG_PASSWORD'),
       database: this.getValue('PG_DATABASE'),
 
-      entities: ['**/*.entity{.ts,.js}'],
+      entities: ['dist/**/*.entity{.ts,.js}'],
+
+      autoLoadEntities: true,
 
       migrationsTableName: 'migration',
 
@@ -48,7 +45,11 @@ class ConfigService {
         migrationsDir: 'src/migration',
       },
 
-      ssl: this.isProduction(),
+      synchronize: true,
+
+      logging: true,
+
+      ssl: { rejectUnauthorized: false },
     };
   }
 }
