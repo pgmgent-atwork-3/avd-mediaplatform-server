@@ -2,31 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Live {
-  title: String!
-  tags: [Tag!]
-}
-
-type Tag {
-  id: Int!
-  name: String!
-  videos: [Video!]
-  lives: [Live!]
-}
-
-type Comment {
-  id: Int!
-  content: String!
-  createdAt: DateTime
-  updatedAt: DateTime
-  user: User!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type User {
   id: Int!
   username: String!
@@ -40,6 +15,32 @@ type User {
   comments: [Comment!]!
 }
 
+type Comment {
+  id: Int!
+  content: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  user: User!
+  video: Video!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Live {
+  title: String!
+  tags: [Tag!]
+}
+
+type Tag {
+  id: Int!
+  name: String!
+  videos: [Video!]
+  lives: [Live!]
+}
+
 type Video {
   id: Float!
   title: String!
@@ -48,6 +49,7 @@ type Video {
   createdAt: DateTime
   updatedAt: DateTime
   user: [User!]!
+  comments: [Comment!]!
   tags: [Tag!]!
 }
 
@@ -64,6 +66,7 @@ type Query {
   videos: [Video!]!
   video(id: Int!): Video!
   user(id: Int!): User!
+  comments: [Comment!]!
   comment(id: Int!): Comment!
   tag(id: Int!): Tag!
   staffs: [Staff!]!
@@ -137,11 +140,13 @@ input UpdateUserInput {
 
 input CreateCommentInput {
   content: String!
+  videoId: Int!
   userId: Int!
 }
 
 input UpdateCommentInput {
   content: String
+  videoId: Int
   userId: Int
   id: Int!
 }

@@ -6,5 +6,8 @@ export class CreateCommentInput {
   content: string;
 
   @Field(() => Int, { nullable: false })
+  videoId: number;
+
+  @Field(() => Int, { nullable: false })
   userId: number;
 }

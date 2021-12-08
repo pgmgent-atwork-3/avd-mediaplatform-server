@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { User } from 'src/user/entities/user.entity';
+import { Video } from 'src/video/entities/video.entity';
 import {
   Column,
   CreateDateColumn,
@@ -35,4 +36,8 @@ export class Comment {
   @ManyToOne(() => User, (user) => user.comments)
   @Field(() => User)
   user: User;
+
+  @ManyToOne(() => Video, (video) => video.comments)
+  @Field(() => Video)
+  video: Video;
 }

@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Comment } from 'src/comment/entities/comment.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
@@ -10,6 +11,7 @@ import {
   ManyToMany,
   Column,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 
 @Entity()
@@ -48,6 +50,10 @@ export class Video {
   @ManyToOne(() => User, (user) => user.videos)
   @Field((type) => [User])
   user: User;
+
+  @OneToMany(() => Comment, (comment) => comment.video)
+  @Field((type) => [Comment])
+  comments: Comment[];
 
   @ManyToMany(() => Tag, (tag) => tag.videos, { cascade: true })
   @JoinTable({
