@@ -48,7 +48,7 @@ type Video {
   url: String!
   createdAt: DateTime
   updatedAt: DateTime
-  user: [User!]!
+  user: User!
   comments: [Comment!]!
   tags: [Tag!]!
 }

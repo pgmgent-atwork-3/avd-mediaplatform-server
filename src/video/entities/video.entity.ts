@@ -48,7 +48,7 @@ export class Video {
   updatedAt?: Date;
 
   @ManyToOne(() => User, (user) => user.videos)
-  @Field((type) => [User])
+  @Field((type) => User)
   user: User;
 
   @OneToMany(() => Comment, (comment) => comment.video)
