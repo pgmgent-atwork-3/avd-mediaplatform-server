@@ -13,9 +13,7 @@ export class CommentService {
   ) {}
 
   async create(createCommentInput: CreateCommentInput) {
-    const comment = this.commentRepository.create(createCommentInput);
-    await this.commentRepository.save(comment);
-    return comment;
+    return await this.commentRepository.save(createCommentInput);
   }
 
   async findAll() {
