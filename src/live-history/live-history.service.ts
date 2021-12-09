@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateLiveHistoryInput } from './dto/create-live-history.input';
 import { UpdateLiveHistoryInput } from './dto/update-live-history.input';
+import { LiveHistory } from './entities/live-history.entity';
 
 @Injectable()
 export class LiveHistoryService {
-  create(createLiveHistoryInput: CreateLiveHistoryInput) {
-    return 'This action adds a new liveHistory';
+  constructor(
+    @InjectRepository(LiveHistory)
+    private readonly liveHistoryRepository: Repository<LiveHistory>,
+  ) {}
+
+  async create(createLiveHistoryInput: CreateLiveHistoryInput) {
+    return await this.liveHistoryRepository.save(createLiveHistoryInput);
   }
 
-  findAll() {
-    return `This action returns all liveHistory`;
+  async findAll() {
+    return await this.liveHistoryRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} liveHistory`;
+  async findOne(id: number) {
+    return await this.liveHistoryRepository.findOne(id);
   }
 
-  update(id: number, updateLiveHistoryInput: UpdateLiveHistoryInput) {
-    return `This action updates a #${id} liveHistory`;
+  async update(id: number, updateLiveHistoryInput: UpdateLiveHistoryInput) {
+    const liveHistory = await this.liveHistoryRepository.findOne(id);
+    await this.liveHistoryRepository.update(id, updateLiveHistoryInput);
+    return await this.liveHistoryRepository.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} liveHistory`;
+  async remove(id: number) {
+    const liveHistory = await this.liveHistoryRepository.findOne(id);
+    await this.liveHistoryRepository.remove(liveHistory);
+    return await this.liveHistoryRepository.find();
   }
 }
