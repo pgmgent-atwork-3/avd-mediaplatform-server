@@ -9,11 +9,14 @@ export class LiveUpcomingResolver {
   constructor(private readonly liveUpcomingService: LiveUpcomingService) {}
 
   @Mutation(() => LiveUpcoming)
-  createLiveUpcoming(@Args('createLiveUpcomingInput') createLiveUpcomingInput: CreateLiveUpcomingInput) {
+  createLiveUpcoming(
+    @Args('createLiveUpcomingInput')
+    createLiveUpcomingInput: CreateLiveUpcomingInput,
+  ) {
     return this.liveUpcomingService.create(createLiveUpcomingInput);
   }
 
-  @Query(() => [LiveUpcoming], { name: 'liveUpcoming' })
+  @Query(() => [LiveUpcoming], { name: 'liveUpcomings' })
   findAll() {
     return this.liveUpcomingService.findAll();
   }
@@ -24,8 +27,14 @@ export class LiveUpcomingResolver {
   }
 
   @Mutation(() => LiveUpcoming)
-  updateLiveUpcoming(@Args('updateLiveUpcomingInput') updateLiveUpcomingInput: UpdateLiveUpcomingInput) {
-    return this.liveUpcomingService.update(updateLiveUpcomingInput.id, updateLiveUpcomingInput);
+  updateLiveUpcoming(
+    @Args('updateLiveUpcomingInput')
+    updateLiveUpcomingInput: UpdateLiveUpcomingInput,
+  ) {
+    return this.liveUpcomingService.update(
+      updateLiveUpcomingInput.id,
+      updateLiveUpcomingInput,
+    );
   }
 
   @Mutation(() => LiveUpcoming)

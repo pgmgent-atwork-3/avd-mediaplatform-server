@@ -9,11 +9,14 @@ export class LiveHistoryResolver {
   constructor(private readonly liveHistoryService: LiveHistoryService) {}
 
   @Mutation(() => LiveHistory)
-  createLiveHistory(@Args('createLiveHistoryInput') createLiveHistoryInput: CreateLiveHistoryInput) {
+  createLiveHistory(
+    @Args('createLiveHistoryInput')
+    createLiveHistoryInput: CreateLiveHistoryInput,
+  ) {
     return this.liveHistoryService.create(createLiveHistoryInput);
   }
 
-  @Query(() => [LiveHistory], { name: 'liveHistory' })
+  @Query(() => [LiveHistory], { name: 'liveHistories' })
   findAll() {
     return this.liveHistoryService.findAll();
   }
@@ -24,8 +27,14 @@ export class LiveHistoryResolver {
   }
 
   @Mutation(() => LiveHistory)
-  updateLiveHistory(@Args('updateLiveHistoryInput') updateLiveHistoryInput: UpdateLiveHistoryInput) {
-    return this.liveHistoryService.update(updateLiveHistoryInput.id, updateLiveHistoryInput);
+  updateLiveHistory(
+    @Args('updateLiveHistoryInput')
+    updateLiveHistoryInput: UpdateLiveHistoryInput,
+  ) {
+    return this.liveHistoryService.update(
+      updateLiveHistoryInput.id,
+      updateLiveHistoryInput,
+    );
   }
 
   @Mutation(() => LiveHistory)
