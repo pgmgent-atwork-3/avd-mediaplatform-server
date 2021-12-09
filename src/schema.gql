@@ -77,6 +77,16 @@ type Staff {
   password: String!
 }
 
+type LiveHistory {
+  id: Int!
+  title: String!
+  url: String!
+  thumbnail: String!
+  creator_name: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
 type Query {
   videos: [Video!]!
   video(id: Int!): Video!
@@ -91,6 +101,7 @@ type Query {
   audios: [Audio!]!
   audio(id: Int!): Audio!
   audioPicture(id: Int!): AudioPicture!
+  liveHistory(id: Int!): LiveHistory!
 }
 
 type Mutation {
@@ -120,6 +131,9 @@ type Mutation {
   createAudioPicture(createAudioPictureInput: CreateAudioPictureInput!): AudioPicture!
   updateAudioPicture(updateAudioPictureInput: UpdateAudioPictureInput!): AudioPicture!
   removeAudioPicture(id: Int!): AudioPicture!
+  createLiveHistory(createLiveHistoryInput: CreateLiveHistoryInput!): LiveHistory!
+  updateLiveHistory(updateLiveHistoryInput: UpdateLiveHistoryInput!): LiveHistory!
+  removeLiveHistory(id: Int!): LiveHistory!
 }
 
 input CreateVideoInput {
@@ -233,5 +247,20 @@ input CreateAudioPictureInput {
 
 input UpdateAudioPictureInput {
   url: String
+  id: Int!
+}
+
+input CreateLiveHistoryInput {
+  title: String!
+  url: String!
+  thumbnail: String!
+  creator_name: String!
+}
+
+input UpdateLiveHistoryInput {
+  title: String
+  url: String
+  thumbnail: String
+  creator_name: String
   id: Int!
 }

@@ -13,6 +13,7 @@ import { StaffModule } from './staff/staff.module';
 import { LiveModule } from './live/live.module';
 import { AudioModule } from './audio/audio.module';
 import { AudioPictureModule } from './audio-picture/audio-picture.module';
+import { LiveHistoryModule } from './live-history/live-history.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AudioPictureModule } from './audio-picture/audio-picture.module';
     LiveModule,
     AudioModule,
     AudioPictureModule,
+    LiveHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
