@@ -25,7 +25,8 @@ export class AudioService {
   }
 
   async update(id: number, updateAudioInput: UpdateAudioInput) {
-    return await this.audioRepository.update(id, updateAudioInput);
+    const audio = await this.audioRepository.findOne(id);
+    return await this.audioRepository.save({ ...audio, ...updateAudioInput });
   }
 
   async remove(id: number) {
