@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateAudioInput } from './dto/create-audio.input';
 import { UpdateAudioInput } from './dto/update-audio.input';
+import { Audio } from './entities/audio.entity';
 
 @Injectable()
 export class AudioService {
-  create(createAudioInput: CreateAudioInput) {
-    return 'This action adds a new audio';
+  constructor(
+    @InjectRepository(Audio)
+    private readonly audioRepository: Repository<Audio>,
+  ) {}
+
+  async create(createAudioInput: CreateAudioInput) {
+    return await this.audioRepository.save(createAudioInput);
   }
 
-  findAll() {
-    return `This action returns all audio`;
+  async findAll() {
+    return await this.audioRepository.find({ relations: ['audio_picture'] });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} audio`;
+  async findOne(id: number) {
+    return await this.audioRepository.findOne(id);
   }
 
-  update(id: number, updateAudioInput: UpdateAudioInput) {
-    return `This action updates a #${id} audio`;
+  async update(id: number, updateAudioInput: UpdateAudioInput) {
+    return await this.audioRepository.update(id, updateAudioInput);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} audio`;
+  async remove(id: number) {
+    return await this.audioRepository.delete(id);
   }
 }

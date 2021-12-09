@@ -13,7 +13,7 @@ export class AudioResolver {
     return this.audioService.create(createAudioInput);
   }
 
-  @Query(() => [Audio], { name: 'audio' })
+  @Query(() => [Audio], { name: 'audios' })
   findAll() {
     return this.audioService.findAll();
   }

@@ -43,7 +43,7 @@ export class Audio {
   audio_picture: AudioPicture;
 
   @Column({ type: 'int', name: 'audioPictureId' })
-  audio_picture_id: number;
+  audioPictureId: number;
 
   @ManyToMany(() => Tag, (tag) => tag.audios, { cascade: true })
   @JoinTable({
