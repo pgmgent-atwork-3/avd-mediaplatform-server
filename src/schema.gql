@@ -2,31 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Live {
-  title: String!
-  tags: [Tag!]
-}
-
-type Tag {
-  id: Int!
-  name: String!
-  videos: [Video!]
-  lives: [Live!]
-}
-
-type Comment {
-  id: Int!
-  content: String!
-  createdAt: DateTime
-  updatedAt: DateTime
-  user: User!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type User {
   id: Int!
   username: String!
@@ -40,6 +15,47 @@ type User {
   comments: [Comment!]!
 }
 
+type Comment {
+  id: Int!
+  content: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  user: User!
+  video: Video!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type AudioPicture {
+  url: String!
+}
+
+type Audio {
+  title: String!
+  description: String!
+  soundcloud_url: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+  audio_picture: AudioPicture!
+  tags: [Tag!]!
+}
+
+type Live {
+  title: String!
+  tags: [Tag!]
+}
+
+type Tag {
+  id: Int!
+  name: String!
+  videos: [Video!]
+  lives: [Live!]
+  audios: [Audio!]
+}
+
 type Video {
   id: Float!
   title: String!
@@ -47,7 +63,8 @@ type Video {
   url: String!
   createdAt: DateTime
   updatedAt: DateTime
-  user: [User!]!
+  user: User!
+  comments: [Comment!]!
   tags: [Tag!]!
 }
 
@@ -60,16 +77,44 @@ type Staff {
   password: String!
 }
 
+type LiveHistory {
+  id: Int!
+  title: String!
+  url: String!
+  thumbnail: String!
+  creator_name: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type LiveUpcoming {
+  id: Int!
+  title: String!
+  url: String!
+  thumbnail: String!
+  creator_name: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
 type Query {
   videos: [Video!]!
   video(id: Int!): Video!
   user(id: Int!): User!
+  comments: [Comment!]!
   comment(id: Int!): Comment!
   tag(id: Int!): Tag!
   staffs: [Staff!]!
   staff(id: Int!): Staff!
   lives: [Live!]!
   live(id: Int!): Live!
+  audios: [Audio!]!
+  audio(id: Int!): Audio!
+  audioPicture(id: Int!): AudioPicture!
+  liveHistories: [LiveHistory!]!
+  liveHistory(id: Int!): LiveHistory!
+  liveUpcomings: [LiveUpcoming!]!
+  liveUpcoming(id: Int!): LiveUpcoming!
 }
 
 type Mutation {
@@ -93,6 +138,18 @@ type Mutation {
   createLive(createLiveInput: CreateLiveInput!): Live!
   updateLive(updateLiveInput: UpdateLiveInput!): Live!
   removeLive(id: Int!): Live!
+  createAudio(createAudioInput: CreateAudioInput!): Audio!
+  updateAudio(updateAudioInput: UpdateAudioInput!): Audio!
+  removeAudio(id: Int!): Audio!
+  createAudioPicture(createAudioPictureInput: CreateAudioPictureInput!): AudioPicture!
+  updateAudioPicture(updateAudioPictureInput: UpdateAudioPictureInput!): AudioPicture!
+  removeAudioPicture(id: Int!): AudioPicture!
+  createLiveHistory(createLiveHistoryInput: CreateLiveHistoryInput!): LiveHistory!
+  updateLiveHistory(updateLiveHistoryInput: UpdateLiveHistoryInput!): LiveHistory!
+  removeLiveHistory(id: Int!): LiveHistory!
+  createLiveUpcoming(createLiveUpcomingInput: CreateLiveUpcomingInput!): LiveUpcoming!
+  updateLiveUpcoming(updateLiveUpcomingInput: UpdateLiveUpcomingInput!): LiveUpcoming!
+  removeLiveUpcoming(id: Int!): LiveUpcoming!
 }
 
 input CreateVideoInput {
@@ -137,11 +194,13 @@ input UpdateUserInput {
 
 input CreateCommentInput {
   content: String!
+  videoId: Int!
   userId: Int!
 }
 
 input UpdateCommentInput {
   content: String
+  videoId: Int
   userId: Int
   id: Int!
 }
@@ -180,5 +239,59 @@ input CreateLiveInput {
 input UpdateLiveInput {
   title: String
   url: String
+  id: Int!
+}
+
+input CreateAudioInput {
+  title: String!
+  description: String!
+  audioPictureId: Int!
+  soundcloud_url: String!
+}
+
+input UpdateAudioInput {
+  title: String
+  description: String
+  audioPictureId: Int
+  soundcloud_url: String
+  id: Int!
+}
+
+input CreateAudioPictureInput {
+  url: String!
+}
+
+input UpdateAudioPictureInput {
+  url: String
+  id: Int!
+}
+
+input CreateLiveHistoryInput {
+  title: String!
+  url: String!
+  thumbnail: String!
+  creator_name: String!
+}
+
+input UpdateLiveHistoryInput {
+  title: String
+  url: String
+  thumbnail: String
+  creator_name: String
+  id: Int!
+}
+
+input CreateLiveUpcomingInput {
+  title: String!
+  url: String!
+  thumbnail: String!
+  creator_name: String!
+}
+
+input UpdateLiveUpcomingInput {
+  title: String
+  url: String
+  thumbnail: String
+  creator_name: String
   id: Int!
 }

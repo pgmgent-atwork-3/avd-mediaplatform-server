@@ -17,11 +17,15 @@ export class VideoService {
   }
 
   async findAll() {
-    return await this.videoRepository.find({ relations: ['tags'] });
+    return await this.videoRepository.find({
+      relations: ['tags', 'comments', 'user'],
+    });
   }
 
   async findOne(id: number) {
-    return await this.videoRepository.findOne(id);
+    return await this.videoRepository.findOne(id, {
+      relations: ['tags', 'comments', 'user'],
+    });
   }
 
   async update(id: number, updateVideoInput: UpdateVideoInput) {

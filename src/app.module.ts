@@ -11,6 +11,10 @@ import { CommentModule } from './comment/comment.module';
 import { TagModule } from './tag/tag.module';
 import { StaffModule } from './staff/staff.module';
 import { LiveModule } from './live/live.module';
+import { AudioModule } from './audio/audio.module';
+import { AudioPictureModule } from './audio-picture/audio-picture.module';
+import { LiveHistoryModule } from './live-history/live-history.module';
+import { LiveUpcomingModule } from './live-upcoming/live-upcoming.module';
 
 @Module({
   imports: [
@@ -26,6 +30,10 @@ import { LiveModule } from './live/live.module';
     TagModule,
     StaffModule,
     LiveModule,
+    AudioModule,
+    AudioPictureModule,
+    LiveHistoryModule,
+    LiveUpcomingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
