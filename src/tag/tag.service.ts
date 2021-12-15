@@ -20,7 +20,7 @@ export class TagService {
     return this.tagRepository.save(newTag);
   }
 
-  findAll() {
+  findAll(): Promise<Tag[]> {
     return this.tagRepository.find();
   }
 

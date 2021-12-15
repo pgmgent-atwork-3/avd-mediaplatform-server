@@ -32,7 +32,8 @@ export class VideoService {
     return await this.videoRepository.update(id, updateVideoInput);
   }
 
-  async remove(id: number) {
-    return await this.videoRepository.delete(id);
+  async remove(id: number): Promise<Video> {
+    const video = await this.videoRepository.findOne(id);
+    return await this.videoRepository.remove(video);
   }
 }
