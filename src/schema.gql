@@ -102,6 +102,7 @@ type LiveUpcoming {
 type Query {
   videos: [Video!]!
   video(id: Int!): Video!
+  users: [User!]!
   user(id: Int!): User!
   comments: [Comment!]!
   comment(id: Int!): Comment!
