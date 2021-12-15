@@ -27,4 +27,8 @@ export class Staff {
   @Column()
   @Field(() => String, { nullable: false })
   password: string;
+  
+  @Column()
+  @Field(() => String)
+  account_type: string;
 }

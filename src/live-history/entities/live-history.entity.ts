@@ -30,6 +30,11 @@ export class LiveHistory {
   @Field(() => String)
   creator_name: string;
 
+  @Column()
+  @Field(() => Date)
+  streamed_on: Date;
+
+
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;
