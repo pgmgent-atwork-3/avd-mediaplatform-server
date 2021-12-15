@@ -1,5 +1,6 @@
 import { LiveHistory } from 'src/live-history/entities/live-history.entity';
-import { define } from 'typeorm-seeding';
+import { User } from 'src/user/entities/user.entity';
+import { define, factory } from 'typeorm-seeding';
 
 define(LiveHistory, (faker: any) => {
   const liveHistory = new LiveHistory();
@@ -7,7 +8,7 @@ define(LiveHistory, (faker: any) => {
 
   liveHistory.url = faker.internet.url();;
   liveHistory.thumbnail = faker.image.image();
-  liveHistory.creator_name = faker.internet.userName();
+  liveHistory.user = factory(User)() as any;;
   liveHistory.streamed_on = faker.date.past(); 
 
   

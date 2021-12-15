@@ -28,7 +28,7 @@ export class LiveUpcoming {
 
   @Column()
   @Field(() => String)
-  creator_name: string;
+  user: string;
 
   @Column()
   @Field(() => Date)

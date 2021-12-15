@@ -21,7 +21,7 @@ export class Live {
   @Column()
   @Field(() => String)
   user: string;
-  
+
   @ManyToMany(() => Tag, (tag) => tag.lives, { cascade: true })
   @JoinTable({
     name: 'live_tag',
