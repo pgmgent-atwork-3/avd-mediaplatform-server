@@ -3,6 +3,8 @@ import { VideoService } from './video.service';
 import { Video } from './entities/video.entity';
 import { CreateVideoInput } from './dto/create-video.input';
 import { UpdateVideoInput } from './dto/update-video.input';
+import { query } from 'express';
+import { Tag } from 'src/tag/entities/tag.entity';
 
 @Resolver(() => Video)
 export class VideoResolver {
@@ -22,7 +24,6 @@ export class VideoResolver {
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.videoService.findOne(id);
   }
-
 
   @Mutation(() => Video)
   updateVideo(@Args('updateVideoInput') updateVideoInput: UpdateVideoInput) {

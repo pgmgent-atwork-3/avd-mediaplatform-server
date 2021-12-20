@@ -21,6 +21,9 @@ define(Video, (faker: any) => {
   video.description = faker.lorem.sentence();
   video.url = `https://youtube.com/${makeid(15)}`;
   video.user = factory(User)() as any;
+  video.tags = factory(Tag)().makeMany(3) as any;
+
+  console.log('Tags', video.tags);
 
   return video;
 });

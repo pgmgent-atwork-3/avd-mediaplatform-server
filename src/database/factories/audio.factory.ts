@@ -14,17 +14,21 @@ const makeid = (length) => {
   return result;
 };
 
+const createAudioTags = () => {
+  const tags = [];
+  for (let i = 0; i < 10; i++) {
+    factory(Tag)() as any;
+  }
+  return tags;
+};
+
 define(Audio, (faker: any) => {
   const audio = new Audio();
 
   audio.title = faker.lorem.sentence();
   audio.description = faker.lorem.sentence();
   audio.soundcloud_url = `https://soundcloud.com/${makeid(15)}`;
-  audio.tags = [
-    factory(Tag)() as any,
-    factory(Tag)() as any,
-    factory(Tag)() as any,
-  ];
+  audio.tags = createAudioTags();
   audio.audio_picture = factory(AudioPicture)() as any;
 
   return audio;
