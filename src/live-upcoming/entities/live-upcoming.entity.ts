@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import {
+  Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
@@ -13,17 +14,25 @@ export class LiveUpcoming {
   @Field(() => Int)
   id: number;
 
+  @Column()
   @Field(() => String)
   title: string;
 
+  @Column()
   @Field(() => String)
   url: string;
 
+  @Column()
   @Field(() => String)
   thumbnail: string;
 
+  @Column()
   @Field(() => String)
-  creator_name: string;
+  user: string;
+
+  @Column()
+  @Field(() => Date)
+  start_date: Date;
 
   @CreateDateColumn()
   @Field(() => Date)

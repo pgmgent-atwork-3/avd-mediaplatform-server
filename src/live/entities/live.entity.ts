@@ -18,6 +18,10 @@ export class Live {
   @Field(() => String, { nullable: false })
   title: string;
 
+  @Column()
+  @Field(() => String)
+  user: string;
+
   @ManyToMany(() => Tag, (tag) => tag.lives, { cascade: true })
   @JoinTable({
     name: 'live_tag',

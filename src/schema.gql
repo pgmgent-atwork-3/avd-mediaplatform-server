@@ -75,6 +75,7 @@ type Staff {
   lastname: String!
   email: String!
   password: String!
+  account_type: String!
 }
 
 type LiveHistory {
@@ -93,6 +94,7 @@ type LiveUpcoming {
   url: String!
   thumbnail: String!
   creator_name: String!
+  start_date: DateTime!
   created_at: DateTime!
   updated_at: DateTime!
 }
