@@ -15,6 +15,7 @@ import { AudioModule } from './audio/audio.module';
 import { AudioPictureModule } from './audio-picture/audio-picture.module';
 import { LiveHistoryModule } from './live-history/live-history.module';
 import { LiveUpcomingModule } from './live-upcoming/live-upcoming.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { LiveUpcomingModule } from './live-upcoming/live-upcoming.module';
     AudioPictureModule,
     LiveHistoryModule,
     LiveUpcomingModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

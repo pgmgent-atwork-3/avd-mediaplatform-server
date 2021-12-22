@@ -23,6 +23,7 @@ scalar DateTime
 
 type Live {
   title: String!
+  user: String!
   tags: [Tag!]
 }
 
@@ -83,7 +84,8 @@ type LiveHistory {
   title: String!
   url: String!
   thumbnail: String!
-  creator_name: String!
+  user: String!
+  streamed_on: DateTime!
   created_at: DateTime!
   updated_at: DateTime!
 }
@@ -93,10 +95,15 @@ type LiveUpcoming {
   title: String!
   url: String!
   thumbnail: String!
-  creator_name: String!
+  user: String!
   start_date: DateTime!
   created_at: DateTime!
   updated_at: DateTime!
+}
+
+type LoginResponse {
+  accessToken: String!
+  user: User!
 }
 
 type Query {
@@ -153,6 +160,8 @@ type Mutation {
   createLiveUpcoming(createLiveUpcomingInput: CreateLiveUpcomingInput!): LiveUpcoming!
   updateLiveUpcoming(updateLiveUpcomingInput: UpdateLiveUpcomingInput!): LiveUpcoming!
   removeLiveUpcoming(id: Int!): LiveUpcoming!
+  login(loginUserInput: LoginUserInput!): LoginResponse!
+  signup(loginUserInput: CreateUserInput!): User!
 }
 
 input CreateVideoInput {
@@ -297,4 +306,9 @@ input UpdateLiveUpcomingInput {
   thumbnail: String
   creator_name: String
   id: Int!
+}
+
+input LoginUserInput {
+  username: String!
+  password: String!
 }

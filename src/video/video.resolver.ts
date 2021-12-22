@@ -5,6 +5,8 @@ import { CreateVideoInput } from './dto/create-video.input';
 import { UpdateVideoInput } from './dto/update-video.input';
 import { query } from 'express';
 import { Tag } from 'src/tag/entities/tag.entity';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Resolver(() => Video)
 export class VideoResolver {
@@ -16,6 +18,7 @@ export class VideoResolver {
   }
 
   @Query(() => [Video], { name: 'videos' })
+  // @UseGuards(JwtAuthGuard)
   findAll() {
     return this.videoService.findAll();
   }
