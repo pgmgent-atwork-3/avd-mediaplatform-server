@@ -111,6 +111,7 @@ type Query {
   video(id: Int!): Video!
   users: [User!]!
   user(id: Int!): User!
+  getUser: User!
   comments: [Comment!]!
   comment(id: Int!): Comment!
   tag(id: Int!): Tag!
