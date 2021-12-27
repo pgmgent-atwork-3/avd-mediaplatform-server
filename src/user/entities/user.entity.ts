@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 
 import * as bcrypt from 'bcrypt';
+import Role from '../enums/role.enum';
 
 @ObjectType()
 @Entity()
@@ -42,9 +43,13 @@ export class User {
   @Field(() => String)
   profile_picture: string;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: Role,
+    default: Role.User,
+  })
   @Field(() => String)
-  account_type: string;
+  role: Role;
 
   @OneToMany(() => Video, (video) => video.user)
   @Field(() => [Video])

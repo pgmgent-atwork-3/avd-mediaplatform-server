@@ -22,9 +22,14 @@ import { LoggerModule } from 'nestjs-pino';
   imports: [
     LoggerModule.forRoot({
       pinoHttp: {
-        prettyPrint: true,
+        prettyPrint: {
+          colorize: true,
+          translateTime: 'SYS:isoTime',
+          levelFirst: true,
+        },
         safe: true,
-        level: 'info',
+        level: 'trace',
+        autoLogging: true,
       },
     }),
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),

@@ -1,4 +1,5 @@
 import { User } from 'src/user/entities/user.entity';
+import Role from 'src/user/enums/role.enum';
 import { define, factory } from 'typeorm-seeding';
 
 define(User, (faker: any) => {
@@ -9,6 +10,6 @@ define(User, (faker: any) => {
   user.email = faker.internet.email();
   user.password = 'pgm2021';
   user.profile_picture = faker.image.avatar();
-  user.account_type = 'user';
+  user.role = Role.User;
   return user;
 });

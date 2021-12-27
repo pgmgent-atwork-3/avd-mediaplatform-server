@@ -35,7 +35,7 @@ type User {
   email: String!
   password: String!
   profile_picture: String!
-  account_type: String!
+  role: String!
   videos: [Video!]!
   comments: [Comment!]!
 }
