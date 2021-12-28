@@ -25,23 +25,26 @@ export class UserResolver {
   }
 
   @Query(() => User, { name: 'user' })
+  @UseGuards(RoleGuard(Role.Admin))
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.userService.findOne(id);
   }
 
   @Query(() => User)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(RoleGuard(Role.User))
   getUser(@Context() context) {
     console.log(context.req.user);
     return this.userService.findOne(context.req.user.id);
   }
 
   @Mutation(() => User)
+  @UseGuards(RoleGuard(Role.Admin))
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     return this.userService.update(updateUserInput.id, updateUserInput);
   }
 
   @Mutation(() => User)
+  @UseGuards(RoleGuard(Role.Admin))
   removeUser(@Args('id', { type: () => Int }) id: number) {
     return this.userService.remove(id);
   }

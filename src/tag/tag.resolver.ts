@@ -3,37 +3,46 @@ import { TagService } from './tag.service';
 import { Tag } from './entities/tag.entity';
 import { CreateTagInput } from './dto/create-tag.input';
 import { UpdateTagInput } from './dto/update-tag.input';
+import RoleGuard from 'src/auth/role.guard';
+import Role from 'src/user/enums/role.enum';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => Tag)
 export class TagResolver {
   constructor(private readonly tagService: TagService) {}
 
   @Mutation(() => Tag)
+  @UseGuards(RoleGuard(Role.Admin))
   createTag(@Args('createTagInput') createTagInput: CreateTagInput) {
     return this.tagService.create(createTagInput);
   }
 
   @Query(() => [Tag], { name: 'tag' })
+  @UseGuards(RoleGuard(Role.Admin))
   findAll() {
     return this.tagService.findAll();
   }
 
   @Query(() => Tag, { name: 'tag' })
+  @UseGuards(RoleGuard(Role.Admin))
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.tagService.findOne(id);
   }
 
   @Mutation(() => Tag)
+  @UseGuards(RoleGuard(Role.Admin))
   updateTag(@Args('updateTagInput') updateTagInput: UpdateTagInput) {
     return this.tagService.update(updateTagInput.id, updateTagInput);
   }
 
   @Mutation(() => Tag)
+  @UseGuards(RoleGuard(Role.Admin))
   removeTag(@Args('id', { type: () => Int }) id: number) {
     return this.tagService.remove(id);
   }
 
   @Mutation(() => Tag, { name: 'addTagToVideo' })
+  @UseGuards(RoleGuard(Role.Admin))
   addTagToVideo(
     @Args('videoId', { type: () => Int }) videoId: number,
     @Args('tagId', { type: () => Int }) tagId: number,
@@ -42,6 +51,7 @@ export class TagResolver {
   }
 
   @Mutation(() => Tag, { name: 'addTagToLive' })
+  @UseGuards(RoleGuard(Role.Admin))
   addTagToLive(
     @Args('liveId', { type: () => Int }) liveId: number,
     @Args('tagId', { type: () => Int }) tagId: number,
