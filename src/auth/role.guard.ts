@@ -11,9 +11,7 @@ const RoleGuard = (role: Role): Type<CanActivate> => {
       const ctx = GqlExecutionContext.create(context);
       const user = ctx.getContext().req.user;
 
-      console.log(user);
-
-      return user?.role.includes(role);
+      return role === 'All' ? true : user?.role.includes(role);
     }
   }
 

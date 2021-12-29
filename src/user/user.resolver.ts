@@ -31,10 +31,9 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  @UseGuards(RoleGuard(Role.User))
+  @UseGuards(RoleGuard(Role.All))
   getUser(@Context() context) {
-    console.log(context.req.user);
-    return this.userService.findOne(context.req.user.id);
+    return this.userService.findOne(context.req.user.userId);
   }
 
   @Mutation(() => User)
