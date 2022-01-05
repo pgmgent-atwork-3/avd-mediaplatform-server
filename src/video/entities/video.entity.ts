@@ -61,7 +61,10 @@ export class Video {
   @IsDate()
   updatedAt?: Date;
 
-  @ManyToOne(() => User, (user) => user.videos)
+  @ManyToOne(() => User, (user) => user.videos, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   @Field((type) => User)
   user: User;
 

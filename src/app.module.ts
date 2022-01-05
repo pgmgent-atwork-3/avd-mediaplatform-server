@@ -20,18 +20,18 @@ import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
-    LoggerModule.forRoot({
-      pinoHttp: {
-        prettyPrint: {
-          colorize: true,
-          translateTime: 'SYS:isoTime',
-          levelFirst: true,
-        },
-        safe: true,
-        level: 'trace',
-        autoLogging: true,
-      },
-    }),
+    // LoggerModule.forRoot({
+    //   pinoHttp: {
+    //     prettyPrint: {
+    //       colorize: true,
+    //       translateTime: 'SYS:isoTime',
+    //       levelFirst: true,
+    //     },
+    //     safe: true,
+    //     level: 'trace',
+    //     autoLogging: true,
+    //   },
+    // }),
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),

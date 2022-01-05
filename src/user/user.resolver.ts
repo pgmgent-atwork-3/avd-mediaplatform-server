@@ -21,6 +21,7 @@ export class UserResolver {
   @Query(() => [User], { name: 'users' })
   @UseGuards(RoleGuard(Role.Admin))
   findAll() {
+    console.log('findAll users');
     return this.userService.findAll();
   }
 
@@ -39,6 +40,7 @@ export class UserResolver {
   @Mutation(() => User)
   @UseGuards(RoleGuard(Role.Admin))
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
+    console.log(updateUserInput);
     return this.userService.update(updateUserInput.id, updateUserInput);
   }
 

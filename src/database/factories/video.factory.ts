@@ -1,3 +1,4 @@
+import { Comment } from 'src/comment/entities/comment.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Video } from 'src/video/entities/video.entity';
@@ -22,8 +23,7 @@ define(Video, (faker: any) => {
   video.url = `https://youtube.com/${makeid(15)}`;
   video.user = factory(User)() as any;
   video.tags = factory(Tag)().makeMany(3) as any;
-
-  console.log('Tags', video.tags);
+  // video.comments = factory(Comment)().makeMany(3) as any;
 
   return video;
 });

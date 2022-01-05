@@ -9,7 +9,7 @@ define(User, (faker: any) => {
   user.lastname = faker.name.lastName();
   user.email = faker.internet.email();
   user.password = 'pgm2021';
-  user.profile_picture = faker.image.avatar();
+  user.profile_picture = `https://identicon-api.herokuapp.com/${user.username}/200?format=png`;
   user.role = Role.User;
   return user;
 });
