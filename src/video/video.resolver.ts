@@ -1,3 +1,4 @@
+import { PaginatedVideoResponse } from './dto/paginated-video.response';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { VideoService } from './video.service';
 import { Video } from './entities/video.entity';
@@ -6,6 +7,8 @@ import { UpdateVideoInput } from './dto/update-video.input';
 import { UseGuards } from '@nestjs/common';
 import RoleGuard from 'src/auth/role.guard';
 import Role from 'src/user/enums/role.enum';
+import { PaginateVideoInput } from './dto/paginate-video.input';
+import { PageInfo } from 'src/common/dto/page-info.response';
 
 @Resolver(() => Video)
 export class VideoResolver {
@@ -17,8 +20,26 @@ export class VideoResolver {
     return this.videoService.create(createVideoInput);
   }
 
+  @Query(() => PaginatedVideoResponse, { name: 'paginatedVideos' })
+  async findAll(@Args() options: PaginateVideoInput) {
+    // links does not get used for the URLs, but rather to determine if there is a next page
+    const { items, links, meta } = await this.videoService.paginate({
+      limit: options.limit,
+      page: options.page,
+      route: '/videos',
+    });
+
+    return new PaginatedVideoResponse(
+      meta.currentPage,
+      meta.totalItems,
+      meta.totalPages,
+      new PageInfo(links.next, links.previous),
+      items,
+    );
+  }
+
   @Query(() => [Video], { name: 'videos' })
-  findAll() {
+  findAllVideos() {
     return this.videoService.findAll();
   }
 

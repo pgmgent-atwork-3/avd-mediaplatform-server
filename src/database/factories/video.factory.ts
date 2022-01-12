@@ -24,6 +24,7 @@ define(Video, (faker: any) => {
   video.user = factory(User)() as any;
   video.tags = factory(Tag)().makeMany(3) as any;
   // video.comments = factory(Comment)().makeMany(3) as any;
+  video.thumbnail = 'https://picsum.photos/400/200';
 
   return video;
 });

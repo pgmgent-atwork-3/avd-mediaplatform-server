@@ -47,6 +47,11 @@ export class Video {
   @IsFQDN()
   url: string;
 
+  @Column()
+  @Field((type) => String)
+  @IsFQDN()
+  thumbnail: string;
+
   @CreateDateColumn({
     type: 'timestamp',
   })

@@ -11,6 +11,9 @@ export class CreateVideoInput {
   @Field()
   url: string;
 
+  @Field()
+  thumbnail: string;
+
   @Field(() => Date, { nullable: true })
   createdAt?: Date;
 

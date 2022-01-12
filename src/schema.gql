@@ -54,6 +54,7 @@ type Video {
   title: String!
   description: String!
   url: String!
+  thumbnail: String!
   createdAt: DateTime
   updatedAt: DateTime
   user: User!
@@ -67,6 +68,19 @@ type Tag {
   videos: [Video!]
   lives: [Live!]
   audios: [Audio!]
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+}
+
+type PaginatedVideoResponse {
+  currentPage: Float!
+  totalCount: Float!
+  totalPages: Float!
+  pageInfo: PageInfo!
+  items: [Video!]
 }
 
 type Staff {
@@ -107,6 +121,7 @@ type LoginResponse {
 }
 
 type Query {
+  paginatedVideos(search: String = "", page: Int = 0, limit: Int = 25): PaginatedVideoResponse!
   videos: [Video!]!
   video(id: Int!): Video!
   users: [User!]!
@@ -169,6 +184,7 @@ input CreateVideoInput {
   title: String!
   description: String!
   url: String!
+  thumbnail: String!
   createdAt: DateTime
   updatedAt: DateTime
   userId: Int
@@ -178,6 +194,7 @@ input UpdateVideoInput {
   title: String
   description: String
   url: String
+  thumbnail: String
   createdAt: DateTime
   updatedAt: DateTime
   userId: Int
