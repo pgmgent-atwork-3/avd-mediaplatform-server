@@ -1,4 +1,11 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import {
+  IsAlphanumeric,
+  IsDate,
+  IsFQDN,
+  IsNotEmpty,
+  MinLength,
+} from 'class-validator';
 import { Comment } from 'src/comment/entities/comment.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
 import { User } from 'src/user/entities/user.entity';
@@ -25,29 +32,44 @@ export class Video {
 
   @Column()
   @Field((type) => String)
+  @IsAlphanumeric()
+  @IsNotEmpty()
+  @MinLength(3)
   title: string;
 
   @Column()
   @Field((type) => String)
+  @IsAlphanumeric()
   description: string;
 
   @Column()
   @Field((type) => String)
+  @IsFQDN()
   url: string;
+
+  @Column()
+  @Field((type) => String)
+  @IsFQDN()
+  thumbnail: string;
 
   @CreateDateColumn({
     type: 'timestamp',
   })
   @Field((type) => Date, { nullable: true })
+  @IsDate()
   createdAt?: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
   })
   @Field((type) => Date, { nullable: true })
+  @IsDate()
   updatedAt?: Date;
 
-  @ManyToOne(() => User, (user) => user.videos)
+  @ManyToOne(() => User, (user) => user.videos, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   @Field((type) => User)
   user: User;
 

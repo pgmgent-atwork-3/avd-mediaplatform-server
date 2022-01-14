@@ -8,6 +8,6 @@ import { Live } from 'src/live/entities/live.entity';
 
 @Module({
   providers: [TagResolver, TagService],
-  imports: [TypeOrmModule.forFeature([Tag, Video, Live])],
+  imports: [TypeOrmModule.forFeature([Tag, Live, Video])],
 })
 export class TagModule {}

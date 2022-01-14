@@ -24,6 +24,10 @@ export class UserService {
     return await this.userRepository.findOne(id);
   }
 
+  async findByUsername(username: string) {
+    return await this.userRepository.findOne({ username });
+  }
+
   async update(id: number, updateUserInput: UpdateUserInput) {
     const user = await this.userRepository.findOne(id);
     this.userRepository.merge(user, updateUserInput);
@@ -32,6 +36,7 @@ export class UserService {
 
   async remove(id: number) {
     const user = await this.userRepository.findOne(id);
-    return await this.userRepository.remove(user);
+    await this.userRepository.remove(user);
+    return user;
   }
 }

@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { IsAlpha, IsAlphanumeric, IsDate, IsFQDN } from 'class-validator';
 import { AudioPicture } from 'src/audio-picture/entities/audio-picture.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
 import {
@@ -20,21 +21,26 @@ export class Audio {
 
   @Column()
   @Field(() => String)
+  @IsAlphanumeric()
   title: string;
 
   @Column()
   @Field(() => String)
+  @IsAlphanumeric()
   description: string;
 
   @Column()
   @Field(() => String)
+  @IsFQDN()
   soundcloud_url: string;
 
   @CreateDateColumn()
+  @IsDate()
   @Field(() => Date)
   created_at: Date;
 
   @UpdateDateColumn()
+  @IsDate()
   @Field(() => Date)
   updated_at: Date;
 

@@ -39,3 +39,14 @@ lerna-debug.log*
 src/*.gql
 src/schema.gql
 src/schema.gql
+
+/.yarn
+
+# Yarn
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

@@ -11,8 +11,8 @@ import { Tag } from './entities/tag.entity';
 export class TagService {
   constructor(
     @InjectRepository(Tag) private tagRepository: Repository<Tag>,
-    @InjectRepository(Video) private videoRepository: Repository<Video>,
     @InjectRepository(Live) private liveRepository: Repository<Live>,
+    @InjectRepository(Video) private videoRepository: Repository<Video>,
   ) {}
 
   create(createTagInput: CreateTagInput) {
@@ -20,7 +20,7 @@ export class TagService {
     return this.tagRepository.save(newTag);
   }
 
-  findAll() {
+  findAll(): Promise<Tag[]> {
     return this.tagRepository.find();
   }
 

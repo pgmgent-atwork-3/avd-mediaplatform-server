@@ -1,9 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Tag } from 'src/tag/entities/tag.entity';
+import { Like, Repository } from 'typeorm';
 import { CreateVideoInput } from './dto/create-video.input';
 import { UpdateVideoInput } from './dto/update-video.input';
 import { Video } from './entities/video.entity';
+import {
+  paginate,
+  IPaginationOptions,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class VideoService {
@@ -32,7 +38,14 @@ export class VideoService {
     return await this.videoRepository.update(id, updateVideoInput);
   }
 
-  async remove(id: number) {
-    return await this.videoRepository.delete(id);
+  async remove(id: number): Promise<Video> {
+    const video = await this.videoRepository.findOne(id);
+    return await this.videoRepository.remove(video);
+  }
+
+  async paginate(options: IPaginationOptions): Promise<Pagination<Video>> {
+    return await paginate<Video>(this.videoRepository, options, {
+      relations: ['tags', 'comments', 'user'],
+    });
   }
 }

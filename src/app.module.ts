@@ -15,9 +15,23 @@ import { AudioModule } from './audio/audio.module';
 import { AudioPictureModule } from './audio-picture/audio-picture.module';
 import { LiveHistoryModule } from './live-history/live-history.module';
 import { LiveUpcomingModule } from './live-upcoming/live-upcoming.module';
+import { AuthModule } from './auth/auth.module';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
+    // LoggerModule.forRoot({
+    //   pinoHttp: {
+    //     prettyPrint: {
+    //       colorize: true,
+    //       translateTime: 'SYS:isoTime',
+    //       levelFirst: true,
+    //     },
+    //     safe: true,
+    //     level: 'trace',
+    //     autoLogging: true,
+    //   },
+    // }),
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -34,6 +48,7 @@ import { LiveUpcomingModule } from './live-upcoming/live-upcoming.module';
     AudioPictureModule,
     LiveHistoryModule,
     LiveUpcomingModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

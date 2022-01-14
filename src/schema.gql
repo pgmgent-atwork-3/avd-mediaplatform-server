@@ -2,33 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
-  id: Int!
-  username: String!
-  firstname: String!
-  lastname: String!
-  email: String!
-  password: String!
-  profile_picture: String!
-  account_type: String!
-  videos: [Video!]!
-  comments: [Comment!]!
-}
-
-type Comment {
-  id: Int!
-  content: String!
-  createdAt: DateTime
-  updatedAt: DateTime
-  user: User!
-  video: Video!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type AudioPicture {
   url: String!
 }
@@ -43,9 +16,50 @@ type Audio {
   tags: [Tag!]!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Live {
   title: String!
+  user: String!
   tags: [Tag!]
+}
+
+type User {
+  id: Int!
+  username: String!
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  profile_picture: String!
+  role: String!
+  videos: [Video!]!
+  comments: [Comment!]!
+}
+
+type Comment {
+  id: Int!
+  content: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  user: User!
+  video: Video!
+}
+
+type Video {
+  id: Float!
+  title: String!
+  description: String!
+  url: String!
+  thumbnail: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  user: User!
+  comments: [Comment!]!
+  tags: [Tag!]!
 }
 
 type Tag {
@@ -56,16 +70,17 @@ type Tag {
   audios: [Audio!]
 }
 
-type Video {
-  id: Float!
-  title: String!
-  description: String!
-  url: String!
-  createdAt: DateTime
-  updatedAt: DateTime
-  user: User!
-  comments: [Comment!]!
-  tags: [Tag!]!
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+}
+
+type PaginatedVideoResponse {
+  currentPage: Float!
+  totalCount: Float!
+  totalPages: Float!
+  pageInfo: PageInfo!
+  items: [Video!]
 }
 
 type Staff {
@@ -75,6 +90,7 @@ type Staff {
   lastname: String!
   email: String!
   password: String!
+  account_type: String!
 }
 
 type LiveHistory {
@@ -82,7 +98,8 @@ type LiveHistory {
   title: String!
   url: String!
   thumbnail: String!
-  creator_name: String!
+  user: String!
+  streamed_on: DateTime!
   created_at: DateTime!
   updated_at: DateTime!
 }
@@ -92,15 +109,24 @@ type LiveUpcoming {
   title: String!
   url: String!
   thumbnail: String!
-  creator_name: String!
+  user: String!
+  start_date: DateTime!
   created_at: DateTime!
   updated_at: DateTime!
 }
 
+type LoginResponse {
+  accessToken: String!
+  user: User!
+}
+
 type Query {
+  paginatedVideos(search: String = "", page: Int = 0, limit: Int = 25): PaginatedVideoResponse!
   videos: [Video!]!
   video(id: Int!): Video!
+  users: [User!]!
   user(id: Int!): User!
+  getUser: User!
   comments: [Comment!]!
   comment(id: Int!): Comment!
   tag(id: Int!): Tag!
@@ -150,12 +176,15 @@ type Mutation {
   createLiveUpcoming(createLiveUpcomingInput: CreateLiveUpcomingInput!): LiveUpcoming!
   updateLiveUpcoming(updateLiveUpcomingInput: UpdateLiveUpcomingInput!): LiveUpcoming!
   removeLiveUpcoming(id: Int!): LiveUpcoming!
+  login(loginUserInput: LoginUserInput!): LoginResponse!
+  signup(loginUserInput: CreateUserInput!): User!
 }
 
 input CreateVideoInput {
   title: String!
   description: String!
   url: String!
+  thumbnail: String!
   createdAt: DateTime
   updatedAt: DateTime
   userId: Int
@@ -165,6 +194,7 @@ input UpdateVideoInput {
   title: String
   description: String
   url: String
+  thumbnail: String
   createdAt: DateTime
   updatedAt: DateTime
   userId: Int
@@ -178,7 +208,7 @@ input CreateUserInput {
   email: String!
   password: String!
   profile_picture: String!
-  account_type: String!
+  role: String!
 }
 
 input UpdateUserInput {
@@ -188,7 +218,7 @@ input UpdateUserInput {
   email: String
   password: String
   profile_picture: String
-  account_type: String
+  role: String
   id: Int!
 }
 
@@ -294,4 +324,9 @@ input UpdateLiveUpcomingInput {
   thumbnail: String
   creator_name: String
   id: Int!
+}
+
+input LoginUserInput {
+  username: String!
+  password: String!
 }

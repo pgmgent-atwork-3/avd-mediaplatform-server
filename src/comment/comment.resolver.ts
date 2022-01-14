@@ -3,12 +3,16 @@ import { CommentService } from './comment.service';
 import { Comment } from './entities/comment.entity';
 import { CreateCommentInput } from './dto/create-comment.input';
 import { UpdateCommentInput } from './dto/update-comment.input';
+import Role from 'src/user/enums/role.enum';
+import RoleGuard from 'src/auth/role.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => Comment)
 export class CommentResolver {
   constructor(private readonly commentService: CommentService) {}
 
   @Mutation(() => Comment)
+  @UseGuards(RoleGuard(Role.User))
   createComment(
     @Args('createCommentInput') createCommentInput: CreateCommentInput,
   ) {
@@ -16,16 +20,19 @@ export class CommentResolver {
   }
 
   @Query(() => [Comment], { name: 'comments' })
+  @UseGuards(RoleGuard(Role.User))
   findAll() {
     return this.commentService.findAll();
   }
 
   @Query(() => Comment, { name: 'comment' })
+  @UseGuards(RoleGuard(Role.User))
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.commentService.findOne(id);
   }
 
   @Mutation(() => Comment)
+  @UseGuards(RoleGuard(Role.User))
   updateComment(
     @Args('updateCommentInput') updateCommentInput: UpdateCommentInput,
   ) {
@@ -36,6 +43,7 @@ export class CommentResolver {
   }
 
   @Mutation(() => Comment)
+  @UseGuards(RoleGuard(Role.User))
   removeComment(@Args('id', { type: () => Int }) id: number) {
     return this.commentService.remove(id);
   }

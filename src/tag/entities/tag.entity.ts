@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { IsAlphanumeric } from 'class-validator';
 import { Audio } from 'src/audio/entities/audio.entity';
 import { Live } from 'src/live/entities/live.entity';
 import { Video } from 'src/video/entities/video.entity';
@@ -13,6 +14,7 @@ export class Tag {
 
   @Column()
   @Field(() => String)
+  @IsAlphanumeric()
   name: string;
 
   @ManyToMany(() => Video, (video) => video.tags)
