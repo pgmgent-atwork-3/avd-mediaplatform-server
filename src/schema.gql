@@ -209,6 +209,7 @@ input CreateUserInput {
   password: String!
   profile_picture: String!
   role: String!
+  videos: Float!
 }
 
 input UpdateUserInput {
@@ -219,6 +220,7 @@ input UpdateUserInput {
   password: String
   profile_picture: String
   role: String
+  videos: Float
   id: Int!
 }
 

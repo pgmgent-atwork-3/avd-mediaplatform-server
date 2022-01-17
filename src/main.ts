@@ -6,7 +6,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const corsOptions = {
-    origin: ['http://localhost:3001', 'https://studio.apollographql.com'],
+    origin: [
+      'http://localhost:3001',
+      'https://studio.apollographql.com',
+      'https://avdtvclient.onrender.com/login',
+    ],
     credentials: true,
   };
 
