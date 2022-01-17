@@ -9,7 +9,7 @@ async function bootstrap() {
     origin: [
       'http://localhost:3001',
       'https://studio.apollographql.com',
-      'https://avdtvclient.onrender.com/login',
+      'https://avdtvclient.onrender.com',
     ],
     credentials: true,
   };
