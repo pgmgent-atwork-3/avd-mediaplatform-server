@@ -23,4 +23,7 @@ export class CreateUserInput {
 
   @Field(() => String, { nullable: false })
   role: Role;
+
+  @Field(() => Number, { nullable: false })
+  videos: [];
 }
