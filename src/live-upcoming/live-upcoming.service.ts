@@ -12,24 +12,29 @@ export class LiveUpcomingService {
     private readonly liveUpcomingRepository: Repository<LiveUpcoming>,
   ) {}
 
-  async create(createLiveUpcomingInput: CreateLiveUpcomingInput) {
+  async create(
+    createLiveUpcomingInput: CreateLiveUpcomingInput,
+  ): Promise<LiveUpcoming> {
     return await this.liveUpcomingRepository.save(createLiveUpcomingInput);
   }
 
-  async findAll() {
+  async findAll(): Promise<LiveUpcoming[]> {
     return await this.liveUpcomingRepository.find();
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<LiveUpcoming> {
     return await this.liveUpcomingRepository.findOne(id);
   }
 
-  async update(id: number, updateLiveUpcomingInput: UpdateLiveUpcomingInput) {
+  async update(
+    id: number,
+    updateLiveUpcomingInput: UpdateLiveUpcomingInput,
+  ): Promise<LiveUpcoming> {
     const liveUpcoming = await this.liveUpcomingRepository.findOne(id);
     return await this.liveUpcomingRepository.save(liveUpcoming);
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<LiveUpcoming> {
     const liveUpcoming = await this.liveUpcomingRepository.findOne(id);
     return await this.liveUpcomingRepository.remove(liveUpcoming);
   }

@@ -5,7 +5,7 @@ import { CreateLiveUpcomingInput } from './dto/create-live-upcoming.input';
 import { UpdateLiveUpcomingInput } from './dto/update-live-upcoming.input';
 import Role from 'src/user/enums/role.enum';
 import RoleGuard from 'src/auth/role.guard';
-import { UseGuards } from '@nestjs/common';
+import { ParseIntPipe, UseGuards } from '@nestjs/common';
 
 @Resolver(() => LiveUpcoming)
 export class LiveUpcomingResolver {
@@ -16,19 +16,21 @@ export class LiveUpcomingResolver {
   createLiveUpcoming(
     @Args('createLiveUpcomingInput')
     createLiveUpcomingInput: CreateLiveUpcomingInput,
-  ) {
+  ): Promise<LiveUpcoming> {
     return this.liveUpcomingService.create(createLiveUpcomingInput);
   }
 
   @Query(() => [LiveUpcoming], { name: 'liveUpcomings' })
   @UseGuards(RoleGuard(Role.User))
-  findAll() {
+  findAll(): Promise<LiveUpcoming[]> {
     return this.liveUpcomingService.findAll();
   }
 
   @Query(() => LiveUpcoming, { name: 'liveUpcoming' })
   @UseGuards(RoleGuard(Role.User))
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(
+    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
+  ): Promise<LiveUpcoming> {
     return this.liveUpcomingService.findOne(id);
   }
 
@@ -37,7 +39,7 @@ export class LiveUpcomingResolver {
   updateLiveUpcoming(
     @Args('updateLiveUpcomingInput')
     updateLiveUpcomingInput: UpdateLiveUpcomingInput,
-  ) {
+  ): Promise<LiveUpcoming> {
     return this.liveUpcomingService.update(
       updateLiveUpcomingInput.id,
       updateLiveUpcomingInput,
@@ -46,7 +48,9 @@ export class LiveUpcomingResolver {
 
   @Mutation(() => LiveUpcoming)
   @UseGuards(RoleGuard(Role.Admin))
-  removeLiveUpcoming(@Args('id', { type: () => Int }) id: number) {
+  removeLiveUpcoming(
+    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
+  ): Promise<LiveUpcoming> {
     return this.liveUpcomingService.remove(id);
   }
 }
