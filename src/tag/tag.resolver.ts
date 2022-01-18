@@ -17,7 +17,7 @@ export class TagResolver {
     return this.tagService.create(createTagInput);
   }
 
-  @Query(() => [Tag], { name: 'tag' })
+  @Query(() => [Tag], { name: 'tags' })
   @UseGuards(RoleGuard(Role.Admin))
   findAll() {
     return this.tagService.findAll();

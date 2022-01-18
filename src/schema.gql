@@ -129,6 +129,7 @@ type Query {
   getUser: User!
   comments: [Comment!]!
   comment(id: Int!): Comment!
+  tags: [Tag!]!
   tag(id: Int!): Tag!
   staffs: [Staff!]!
   staff(id: Int!): Staff!
