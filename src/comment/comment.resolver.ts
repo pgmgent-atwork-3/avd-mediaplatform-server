@@ -5,7 +5,7 @@ import { CreateCommentInput } from './dto/create-comment.input';
 import { UpdateCommentInput } from './dto/update-comment.input';
 import Role from 'src/user/enums/role.enum';
 import RoleGuard from 'src/auth/role.guard';
-import { UseGuards } from '@nestjs/common';
+import { ParseIntPipe, UseGuards } from '@nestjs/common';
 
 @Resolver(() => Comment)
 export class CommentResolver {
@@ -15,19 +15,21 @@ export class CommentResolver {
   @UseGuards(RoleGuard(Role.User))
   createComment(
     @Args('createCommentInput') createCommentInput: CreateCommentInput,
-  ) {
+  ): Promise<Comment> {
     return this.commentService.create(createCommentInput);
   }
 
   @Query(() => [Comment], { name: 'comments' })
   @UseGuards(RoleGuard(Role.User))
-  findAll() {
+  findAll(): Promise<Comment[]> {
     return this.commentService.findAll();
   }
 
   @Query(() => Comment, { name: 'comment' })
   @UseGuards(RoleGuard(Role.User))
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(
+    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
+  ): Promise<Comment> {
     return this.commentService.findOne(id);
   }
 
@@ -35,7 +37,7 @@ export class CommentResolver {
   @UseGuards(RoleGuard(Role.User))
   updateComment(
     @Args('updateCommentInput') updateCommentInput: UpdateCommentInput,
-  ) {
+  ): Promise<Comment> {
     return this.commentService.update(
       updateCommentInput.id,
       updateCommentInput,
@@ -44,7 +46,9 @@ export class CommentResolver {
 
   @Mutation(() => Comment)
   @UseGuards(RoleGuard(Role.User))
-  removeComment(@Args('id', { type: () => Int }) id: number) {
+  removeComment(
+    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
+  ): Promise<Comment> {
     return this.commentService.remove(id);
   }
 }
