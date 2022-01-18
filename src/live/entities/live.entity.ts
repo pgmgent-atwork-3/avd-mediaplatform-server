@@ -1,11 +1,13 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { IsAlphanumeric } from 'class-validator';
 import { Tag } from 'src/tag/entities/tag.entity';
+import { User } from 'src/user/entities/user.entity';
 import {
   Column,
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -20,10 +22,10 @@ export class Live {
   @IsAlphanumeric()
   title: string;
 
-  @Column()
-  @Field(() => String)
-  @IsAlphanumeric()
-  user: string;
+  @ManyToOne(() => User, (user) => user.lives)
+  @JoinTable({ name: 'userId' })
+  @Field(() => [User])
+  user: User;
 
   @ManyToMany(() => Tag, (tag) => tag.lives, { cascade: true })
   @JoinTable({

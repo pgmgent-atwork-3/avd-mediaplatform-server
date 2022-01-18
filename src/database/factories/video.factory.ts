@@ -4,7 +4,7 @@ import { User } from 'src/user/entities/user.entity';
 import { Video } from 'src/video/entities/video.entity';
 import { define, factory } from 'typeorm-seeding';
 
-const makeid = (length) => {
+export const makeid = (length: number): string => {
   var result = '';
   var characters =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

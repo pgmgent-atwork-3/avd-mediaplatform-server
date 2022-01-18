@@ -17,6 +17,8 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
+import { LiveHistory } from 'src/live-history/entities/live-history.entity';
+import { Live } from 'src/live/entities/live.entity';
 
 @ObjectType()
 @Entity()
@@ -77,6 +79,14 @@ export class User {
   @OneToMany(() => Comment, (comment) => comment.user)
   @Field(() => [Comment])
   comments: Comment[];
+
+  @OneToMany(() => LiveHistory, (liveHistory) => liveHistory.user)
+  @Field(() => [LiveHistory])
+  liveHistories: LiveHistory[];
+
+  @OneToMany(() => Live, (live) => live.user)
+  @Field(() => [Live])
+  lives: Live[];
 
   @BeforeInsert()
   async setPassword(password: string) {

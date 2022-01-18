@@ -2,26 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
+type LiveHistory {
   id: Int!
-  username: String!
-  firstname: String!
-  lastname: String!
-  email: String!
-  password: String!
-  profile_picture: String!
-  role: String!
-  videos: [Video!]!
-  comments: [Comment!]!
-}
-
-type Comment {
-  id: Int!
-  content: String!
-  createdAt: DateTime
-  updatedAt: DateTime
-  user: User!
-  video: Video!
+  title: String!
+  url: String!
+  thumbnail: String!
+  user: [User!]!
+  streamed_on: DateTime!
+  created_at: DateTime!
+  updated_at: DateTime!
 }
 
 """
@@ -43,18 +32,42 @@ type Audio {
   tags: [Tag!]!
 }
 
-type Live {
-  title: String!
-  user: String!
-  tags: [Tag!]
-}
-
 type Tag {
   id: Int!
   name: String!
   videos: [Video!]
   lives: [Live!]
   audios: [Audio!]
+}
+
+type Live {
+  title: String!
+  user: [User!]!
+  tags: [Tag!]
+}
+
+type User {
+  id: Int!
+  username: String!
+  firstname: String!
+  lastname: String!
+  email: String!
+  password: String!
+  profile_picture: String!
+  role: String!
+  videos: [Video!]!
+  comments: [Comment!]!
+  liveHistories: [LiveHistory!]!
+  lives: [Live!]!
+}
+
+type Comment {
+  id: Int!
+  content: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  user: User!
+  video: Video!
 }
 
 type Video {
@@ -93,17 +106,6 @@ type Staff {
   account_type: String!
 }
 
-type LiveHistory {
-  id: Int!
-  title: String!
-  url: String!
-  thumbnail: String!
-  user: String!
-  streamed_on: DateTime!
-  created_at: DateTime!
-  updated_at: DateTime!
-}
-
 type LiveUpcoming {
   id: Int!
   title: String!
@@ -129,6 +131,7 @@ type Query {
   getUser: User!
   comments: [Comment!]!
   comment(id: Int!): Comment!
+  tags: [Tag!]!
   tag(id: Int!): Tag!
   staffs: [Staff!]!
   staff(id: Int!): Staff!

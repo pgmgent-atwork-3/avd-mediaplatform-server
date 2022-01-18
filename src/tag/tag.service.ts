@@ -32,8 +32,9 @@ export class TagService {
     return this.tagRepository.update(id, updateTagInput);
   }
 
-  remove(id: number) {
-    return this.tagRepository.delete(id);
+  async remove(id: number) {
+    const tag = await this.findOne(id);
+    return this.tagRepository.remove(tag);
   }
 
   async addTagToVideo(videoId: number, tagId: number) {
