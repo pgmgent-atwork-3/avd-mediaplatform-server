@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { CreateAudioPictureInput } from './dto/create-audio-picture.input';
 import { UpdateAudioPictureInput } from './dto/update-audio-picture.input';
 import { AudioPicture } from './entities/audio-picture.entity';
@@ -12,26 +12,31 @@ export class AudioPictureService {
     private audioPictureRepository: Repository<AudioPicture>,
   ) {}
 
-  async create(createAudioPictureInput: CreateAudioPictureInput) {
+  async create(
+    createAudioPictureInput: CreateAudioPictureInput,
+  ): Promise<AudioPicture> {
     return await this.audioPictureRepository.save(createAudioPictureInput);
   }
 
-  async findAll() {
+  async findAll(): Promise<AudioPicture[]> {
     return await this.audioPictureRepository.find();
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<AudioPicture> {
     return await this.audioPictureRepository.findOne(id);
   }
 
-  async update(id: number, updateAudioPictureInput: UpdateAudioPictureInput) {
+  async update(
+    id: number,
+    updateAudioPictureInput: UpdateAudioPictureInput,
+  ): Promise<UpdateResult> {
     return await this.audioPictureRepository.update(
       id,
       updateAudioPictureInput,
     );
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<DeleteResult> {
     return await this.audioPictureRepository.delete(id);
   }
 }

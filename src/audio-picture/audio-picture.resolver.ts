@@ -5,7 +5,8 @@ import { CreateAudioPictureInput } from './dto/create-audio-picture.input';
 import { UpdateAudioPictureInput } from './dto/update-audio-picture.input';
 import Role from 'src/user/enums/role.enum';
 import RoleGuard from 'src/auth/role.guard';
-import { UseGuards } from '@nestjs/common';
+import { ParseIntPipe, UseGuards } from '@nestjs/common';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Resolver(() => AudioPicture)
 export class AudioPictureResolver {
@@ -16,19 +17,21 @@ export class AudioPictureResolver {
   createAudioPicture(
     @Args('createAudioPictureInput')
     createAudioPictureInput: CreateAudioPictureInput,
-  ) {
+  ): Promise<AudioPicture> {
     return this.audioPictureService.create(createAudioPictureInput);
   }
 
   @Query(() => [AudioPicture], { name: 'audioPicture' })
   @UseGuards(RoleGuard(Role.Admin))
-  findAll() {
+  findAll(): Promise<AudioPicture[]> {
     return this.audioPictureService.findAll();
   }
 
   @Query(() => AudioPicture, { name: 'audioPicture' })
   @UseGuards(RoleGuard(Role.User))
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(
+    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
+  ): Promise<AudioPicture> {
     return this.audioPictureService.findOne(id);
   }
 
@@ -37,7 +40,7 @@ export class AudioPictureResolver {
   updateAudioPicture(
     @Args('updateAudioPictureInput')
     updateAudioPictureInput: UpdateAudioPictureInput,
-  ) {
+  ): Promise<UpdateResult> {
     return this.audioPictureService.update(
       updateAudioPictureInput.id,
       updateAudioPictureInput,
@@ -46,7 +49,9 @@ export class AudioPictureResolver {
 
   @Mutation(() => AudioPicture)
   @UseGuards(RoleGuard(Role.Admin))
-  removeAudioPicture(@Args('id', { type: () => Int }) id: number) {
+  removeAudioPicture(
+    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
+  ): Promise<DeleteResult> {
     return this.audioPictureService.remove(id);
   }
 }
