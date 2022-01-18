@@ -12,27 +12,30 @@ export class LiveHistoryService {
     private readonly liveHistoryRepository: Repository<LiveHistory>,
   ) {}
 
-  async create(createLiveHistoryInput: CreateLiveHistoryInput) {
+  async create(
+    createLiveHistoryInput: CreateLiveHistoryInput,
+  ): Promise<LiveHistory> {
     return await this.liveHistoryRepository.save(createLiveHistoryInput);
   }
 
-  async findAll() {
+  async findAll(): Promise<LiveHistory[]> {
     return await this.liveHistoryRepository.find();
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<LiveHistory> {
     return await this.liveHistoryRepository.findOne(id);
   }
 
-  async update(id: number, updateLiveHistoryInput: UpdateLiveHistoryInput) {
-    const liveHistory = await this.liveHistoryRepository.findOne(id);
+  async update(
+    id: number,
+    updateLiveHistoryInput: UpdateLiveHistoryInput,
+  ): Promise<LiveHistory> {
     await this.liveHistoryRepository.update(id, updateLiveHistoryInput);
     return await this.liveHistoryRepository.findOne(id);
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<LiveHistory> {
     const liveHistory = await this.liveHistoryRepository.findOne(id);
-    await this.liveHistoryRepository.remove(liveHistory);
-    return await this.liveHistoryRepository.find();
+    return await this.liveHistoryRepository.remove(liveHistory);
   }
 }
