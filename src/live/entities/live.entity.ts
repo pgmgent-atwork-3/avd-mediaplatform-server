@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { IsAlphanumeric } from 'class-validator';
 import { Tag } from 'src/tag/entities/tag.entity';
+import { User } from 'src/user/entities/user.entity';
 import {
   Column,
   Entity,
@@ -21,9 +22,8 @@ export class Live {
   title: string;
 
   @Column()
-  @Field(() => String)
-  @IsAlphanumeric()
-  user: string;
+  @Field(() => User)
+  user: User;
 
   @ManyToMany(() => Tag, (tag) => tag.lives, { cascade: true })
   @JoinTable({

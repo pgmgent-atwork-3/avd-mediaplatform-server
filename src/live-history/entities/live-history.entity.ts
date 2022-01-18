@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { IsAlphanumeric, IsDate, IsFQDN } from 'class-validator';
+import { User } from 'src/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -31,9 +32,8 @@ export class LiveHistory {
   thumbnail: string;
 
   @Column()
-  @Field(() => String)
-  @IsAlphanumeric()
-  user: string;
+  @Field(() => User)
+  user: User;
 
   @Column()
   @Field(() => Date)
