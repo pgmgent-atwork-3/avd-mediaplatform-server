@@ -7,6 +7,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -21,8 +22,9 @@ export class Live {
   @IsAlphanumeric()
   title: string;
 
-  @Column()
-  @Field(() => User)
+  @ManyToOne(() => User, (user) => user.lives)
+  @JoinTable({ name: 'userId' })
+  @Field(() => [User])
   user: User;
 
   @ManyToMany(() => Tag, (tag) => tag.lives, { cascade: true })

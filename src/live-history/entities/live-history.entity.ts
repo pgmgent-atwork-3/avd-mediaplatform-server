@@ -5,6 +5,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -31,8 +33,9 @@ export class LiveHistory {
   @IsAlphanumeric()
   thumbnail: string;
 
-  @Column()
-  @Field(() => User)
+  @ManyToOne(() => User, (user) => user.liveHistories)
+  @JoinColumn({ name: 'userId' })
+  @Field(() => [User])
   user: User;
 
   @Column()
