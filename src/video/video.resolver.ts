@@ -4,7 +4,7 @@ import { VideoService } from './video.service';
 import { Video } from './entities/video.entity';
 import { CreateVideoInput } from './dto/create-video.input';
 import { UpdateVideoInput } from './dto/update-video.input';
-import { UseGuards } from '@nestjs/common';
+import { ParseIntPipe, UseGuards } from '@nestjs/common';
 import RoleGuard from 'src/auth/role.guard';
 import Role from 'src/user/enums/role.enum';
 import { PaginateVideoInput } from './dto/paginate-video.input';
@@ -16,12 +16,16 @@ export class VideoResolver {
 
   @Mutation(() => Video)
   @UseGuards(RoleGuard(Role.Admin))
-  createVideo(@Args('createVideoInput') createVideoInput: CreateVideoInput) {
+  createVideo(
+    @Args('createVideoInput') createVideoInput: CreateVideoInput,
+  ): Promise<Video> {
     return this.videoService.create(createVideoInput);
   }
 
   @Query(() => PaginatedVideoResponse, { name: 'paginatedVideos' })
-  async findAll(@Args() options: PaginateVideoInput) {
+  async findAll(
+    @Args() options: PaginateVideoInput,
+  ): Promise<PaginatedVideoResponse> {
     // links does not get used for the URLs, but rather to determine if there is a next page
     const { items, links, meta } = await this.videoService.paginate({
       limit: options.limit,
@@ -39,24 +43,30 @@ export class VideoResolver {
   }
 
   @Query(() => [Video], { name: 'videos' })
-  findAllVideos() {
+  findAllVideos(): Promise<Video[]> {
     return this.videoService.findAll();
   }
 
   @Query(() => Video, { name: 'video' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(
+    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
+  ): Promise<Video> {
     return this.videoService.findOne(id);
   }
 
   @Mutation(() => Video)
   @UseGuards(RoleGuard(Role.Admin))
-  updateVideo(@Args('updateVideoInput') updateVideoInput: UpdateVideoInput) {
+  updateVideo(
+    @Args('updateVideoInput') updateVideoInput: UpdateVideoInput,
+  ): Promise<Video> {
     return this.videoService.update(updateVideoInput.id, updateVideoInput);
   }
 
   @Mutation(() => Video)
   @UseGuards(RoleGuard(Role.Admin))
-  removeVideo(@Args('id', { type: () => Int }) id: number) {
+  removeVideo(
+    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
+  ): Promise<Video> {
     return this.videoService.remove(id);
   }
 }
