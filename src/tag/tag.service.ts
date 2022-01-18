@@ -15,7 +15,7 @@ export class TagService {
     @InjectRepository(Video) private videoRepository: Repository<Video>,
   ) {}
 
-  create(createTagInput: CreateTagInput) {
+  create(createTagInput: CreateTagInput): Promise<Tag> {
     const newTag = this.tagRepository.create(createTagInput);
     return this.tagRepository.save(newTag);
   }
@@ -24,20 +24,21 @@ export class TagService {
     return this.tagRepository.find();
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<Tag> {
     return await this.tagRepository.findOne(id);
   }
 
-  update(id: number, updateTagInput: UpdateTagInput) {
-    return this.tagRepository.update(id, updateTagInput);
+  async update(id: number, updateTagInput: UpdateTagInput): Promise<Tag> {
+    await this.tagRepository.update(id, updateTagInput);
+    return await this.tagRepository.findOne(id);
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<Tag> {
     const tag = await this.findOne(id);
     return this.tagRepository.remove(tag);
   }
 
-  async addTagToVideo(videoId: number, tagId: number) {
+  async addTagToVideo(videoId: number, tagId: number): Promise<Video> {
     let foundVideo = await this.videoRepository.findOne(
       { id: videoId },
       { relations: ['tags'] },
@@ -55,7 +56,7 @@ export class TagService {
     }
   }
 
-  async addTagToLive(liveId: number, tagId: number) {
+  async addTagToLive(liveId: number, tagId: number): Promise<Live> {
     let foundLive = await this.liveRepository.findOne(
       { id: liveId },
       { relations: ['tags'] },
