@@ -30,7 +30,7 @@ export class VideoResolver {
     const { items, links, meta } = await this.videoService.paginate({
       limit: options.limit,
       page: options.page,
-      route: '/videos',
+      route: '/',
     });
 
     return new PaginatedVideoResponse(

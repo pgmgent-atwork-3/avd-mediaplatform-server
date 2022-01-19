@@ -47,7 +47,7 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  @UseGuards(RoleGuard(Role.Admin))
+  // @UseGuards(RoleGuard(Role.Admin))
   removeUser(
     @Args('id', { type: () => Int }, ParseIntPipe) id: number,
   ): Promise<User> {
