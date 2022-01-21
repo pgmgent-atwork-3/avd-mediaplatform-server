@@ -67,13 +67,14 @@ export class Video {
   updatedAt?: Date;
 
   @ManyToOne(() => User, (user) => user.videos, {
-    cascade: true,
     onDelete: 'CASCADE',
   })
   @Field((type) => User)
   user: User;
 
-  @OneToMany(() => Comment, (comment) => comment.video)
+  @OneToMany(() => Comment, (comment) => comment.video, {
+    cascade: true,
+  })
   @Field((type) => [Comment])
   comments: Comment[];
 

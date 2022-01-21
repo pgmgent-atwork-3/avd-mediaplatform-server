@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { UseGuards } from '@nestjs/common';
+import { ParseIntPipe, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import RoleGuard from 'src/auth/role.guard';
 import Role from './enums/role.enum';
@@ -14,39 +14,43 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Mutation(() => User)
-  createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
+  createUser(
+    @Args('createUserInput') createUserInput: CreateUserInput,
+  ): Promise<User> {
     return this.userService.create(createUserInput);
   }
 
   @Query(() => [User], { name: 'users' })
   @UseGuards(RoleGuard(Role.Admin))
-  findAll() {
-    console.log('findAll users');
+  findAll(): Promise<User[]> {
     return this.userService.findAll();
   }
 
   @Query(() => User, { name: 'user' })
   @UseGuards(RoleGuard(Role.Admin))
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => Int }) id: number): Promise<User> {
     return this.userService.findOne(id);
   }
 
   @Query(() => User)
   @UseGuards(RoleGuard(Role.All))
-  getUser(@Context() context) {
+  getUser(@Context() context): Promise<User> {
     return this.userService.findOne(context.req.user.userId);
   }
 
   @Mutation(() => User)
   @UseGuards(RoleGuard(Role.Admin))
-  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    console.log(updateUserInput);
+  updateUser(
+    @Args('updateUserInput') updateUserInput: UpdateUserInput,
+  ): Promise<User> {
     return this.userService.update(updateUserInput.id, updateUserInput);
   }
 
   @Mutation(() => User)
-  @UseGuards(RoleGuard(Role.Admin))
-  removeUser(@Args('id', { type: () => Int }) id: number) {
+  // @UseGuards(RoleGuard(Role.Admin))
+  removeUser(
+    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
+  ): Promise<User> {
     return this.userService.remove(id);
   }
 }

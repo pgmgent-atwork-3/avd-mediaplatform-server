@@ -5,7 +5,8 @@ import { CreateAudioInput } from './dto/create-audio.input';
 import { UpdateAudioInput } from './dto/update-audio.input';
 import Role from 'src/user/enums/role.enum';
 import RoleGuard from 'src/auth/role.guard';
-import { UseGuards } from '@nestjs/common';
+import { ParseIntPipe, UseGuards } from '@nestjs/common';
+import { DeleteResult } from 'typeorm';
 
 @Resolver(() => Audio)
 export class AudioResolver {
@@ -13,31 +14,39 @@ export class AudioResolver {
 
   @Mutation(() => Audio)
   @UseGuards(RoleGuard(Role.Admin))
-  createAudio(@Args('createAudioInput') createAudioInput: CreateAudioInput) {
+  createAudio(
+    @Args('createAudioInput') createAudioInput: CreateAudioInput,
+  ): Promise<Audio> {
     return this.audioService.create(createAudioInput);
   }
 
   @Query(() => [Audio], { name: 'audios' })
   @UseGuards(RoleGuard(Role.User))
-  findAll() {
+  findAll(): Promise<Audio[]> {
     return this.audioService.findAll();
   }
 
   @Query(() => Audio, { name: 'audio' })
   @UseGuards(RoleGuard(Role.User))
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(
+    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
+  ): Promise<Audio> {
     return this.audioService.findOne(id);
   }
 
   @Mutation(() => Audio)
   @UseGuards(RoleGuard(Role.Admin))
-  updateAudio(@Args('updateAudioInput') updateAudioInput: UpdateAudioInput) {
+  updateAudio(
+    @Args('updateAudioInput') updateAudioInput: UpdateAudioInput,
+  ): Promise<Audio> {
     return this.audioService.update(updateAudioInput.id, updateAudioInput);
   }
 
   @Mutation(() => Audio)
   @UseGuards(RoleGuard(Role.Admin))
-  removeAudio(@Args('id', { type: () => Int }) id: number) {
+  removeAudio(
+    @Args('id', { type: () => Int }, new ParseIntPipe()) id: number,
+  ): Promise<DeleteResult> {
     return this.audioService.remove(id);
   }
 }

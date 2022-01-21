@@ -29,33 +29,42 @@ class ConfigService {
   }
 
   public getTypeOrmConfig(): TypeOrmModuleOptions {
-    return {
-      type: 'postgres',
+    return !this.isProduction()
+      ? {
+          type: 'postgres',
 
-      host: this.getValue('PG_HOST'),
-      port: parseInt(this.getValue('PG_PORT')),
-      username: this.getValue('PG_USER'),
-      password: this.getValue('PG_PASSWORD'),
-      database: this.getValue('PG_DATABASE'),
+          host: this.getValue('PG_HOST'),
+          port: parseInt(this.getValue('PG_PORT')),
+          username: this.getValue('PG_USER'),
+          password: this.getValue('PG_PASSWORD'),
+          database: this.getValue('PG_DATABASE'),
 
-      entities: ['dist/**/*.entity{.ts,.js}'],
+          entities: ['dist/**/*.entity{.ts,.js}'],
 
-      autoLoadEntities: true,
+          autoLoadEntities: true,
 
-      migrationsTableName: 'migration',
+          migrationsTableName: 'migration',
 
-      migrations: ['src/migration/*.ts'],
+          migrations: ['src/migration/*.ts'],
 
-      cli: {
-        migrationsDir: 'src/migration',
-      },
+          cli: {
+            migrationsDir: 'src/migration',
+          },
 
-      synchronize: true,
+          synchronize: true,
 
-      logging: true,
+          logging: true,
 
-      ssl: this.isProduction() ? { rejectUnauthorized: false } : false,
-    };
+          ssl: this.isProduction() ? { rejectUnauthorized: false } : false,
+        }
+      : {
+          type: 'postgres',
+          url: this.getValue('DATABASE_URL'),
+          entities: ['dist/**/*.entity{.ts,.js}'],
+          synchronize: true,
+          logging: false,
+          ssl: this.isProduction() ? { rejectUnauthorized: false } : false,
+        };
   }
 }
 
@@ -65,6 +74,7 @@ const configService = new ConfigService(process.env).ensureValues([
   'PG_USER',
   'PG_PASSWORD',
   'PG_DATABASE',
+  'DATABASE_URL',
 ]);
 
 export { configService };

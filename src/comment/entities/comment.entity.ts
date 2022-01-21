@@ -38,7 +38,7 @@ export class Comment {
   @Field((type) => Date, { nullable: true })
   updatedAt?: Date;
 
-  @ManyToOne(() => User, (user) => user.comments, { cascade: true })
+  @ManyToOne(() => User, (user) => user.comments, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   @Field(() => User)
   user: User;
@@ -47,7 +47,7 @@ export class Comment {
   @IsNumber()
   userId: number;
 
-  @ManyToOne(() => Video, (video) => video.comments, { cascade: true })
+  @ManyToOne(() => Video, (video) => video.comments, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'videoId' })
   @Field(() => Video)
   video: Video;

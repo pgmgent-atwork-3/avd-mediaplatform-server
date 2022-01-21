@@ -24,11 +24,14 @@ export class StaffService {
     return await this.staffRepository.findOne(id);
   }
 
-  async update(id: number, updateStaffInput: UpdateStaffInput) {
-    return await this.staffRepository.update(id, updateStaffInput);
+  async update(id: number, updateStaffInput: UpdateStaffInput): Promise<Staff> {
+    const staff = await this.staffRepository.findOne(id);
+    await this.staffRepository.update(id, updateStaffInput);
+    return staff;
   }
 
-  async remove(id: number) {
-    return await this.staffRepository.delete(id);
+  async remove(id: number): Promise<Staff> {
+    const staff = await this.staffRepository.findOne(id);
+    return await this.staffRepository.remove(staff);
   }
 }

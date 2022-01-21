@@ -12,25 +12,28 @@ export class CommentService {
     private commentRepository: Repository<Comment>,
   ) {}
 
-  async create(createCommentInput: CreateCommentInput) {
+  async create(createCommentInput: CreateCommentInput): Promise<Comment> {
     return await this.commentRepository.save(createCommentInput);
   }
 
-  async findAll() {
+  async findAll(): Promise<Comment[]> {
     return await this.commentRepository.find();
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<Comment> {
     return await this.commentRepository.findOne(id);
   }
 
-  async update(id: number, updateCommentInput: UpdateCommentInput) {
+  async update(
+    id: number,
+    updateCommentInput: UpdateCommentInput,
+  ): Promise<Comment> {
     const comment = await this.commentRepository.findOne(id);
     await this.commentRepository.update(id, updateCommentInput);
     return comment;
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<Comment> {
     const comment = await this.commentRepository.findOne(id);
     await this.commentRepository.remove(comment);
     return comment;

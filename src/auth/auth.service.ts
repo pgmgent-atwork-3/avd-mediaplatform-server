@@ -15,13 +15,16 @@ export class AuthService {
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.userService.findByUsername(username);
 
-    const isValid = await bcrypt.compare(password, user.password);
+    if (!user) throw new Error('User does not exist!');
+
+    const isValid = user && (await bcrypt.compare(password, user.password));
 
     if (user && isValid) {
       const { password, ...result } = user;
       return user;
     }
 
+    // Will return 401 Unauthorized response, to which we can assume in the frontend that invalid credentials were provided
     return null;
   }
 

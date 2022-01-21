@@ -72,11 +72,15 @@ export class User {
   @IsString()
   role: Role;
 
-  @OneToMany(() => Video, (video) => video.user)
+  @OneToMany(() => Video, (video) => video.user, {
+    cascade: true,
+  })
   @Field(() => [Video])
   videos: Video[];
 
-  @OneToMany(() => Comment, (comment) => comment.user)
+  @OneToMany(() => Comment, (comment) => comment.user, {
+    cascade: true,
+  })
   @Field(() => [Comment])
   comments: Comment[];
 

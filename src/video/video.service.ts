@@ -17,25 +17,26 @@ export class VideoService {
     @InjectRepository(Video) private videoRepository: Repository<Video>,
   ) {}
 
-  create(createVideoInput: CreateVideoInput) {
+  create(createVideoInput: CreateVideoInput): Promise<Video> {
     const newVideo = this.videoRepository.create(createVideoInput);
     return this.videoRepository.save(newVideo);
   }
 
-  async findAll() {
+  async findAll(): Promise<Video[]> {
     return await this.videoRepository.find({
       relations: ['tags', 'comments', 'user'],
     });
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<Video> {
     return await this.videoRepository.findOne(id, {
       relations: ['tags', 'comments', 'user'],
     });
   }
 
-  async update(id: number, updateVideoInput: UpdateVideoInput) {
-    return await this.videoRepository.update(id, updateVideoInput);
+  async update(id: number, updateVideoInput: UpdateVideoInput): Promise<Video> {
+    await this.videoRepository.update(id, updateVideoInput);
+    return await this.videoRepository.findOne(id);
   }
 
   async remove(id: number): Promise<Video> {
