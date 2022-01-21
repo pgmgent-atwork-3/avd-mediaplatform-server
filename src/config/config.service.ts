@@ -68,13 +68,5 @@ class ConfigService {
   }
 }
 
-const configService = new ConfigService(process.env).ensureValues([
-  'PG_HOST',
-  'PG_PORT',
-  'PG_USER',
-  'PG_PASSWORD',
-  'PG_DATABASE',
-  'DATABASE_URL',
-]);
-
+const configService = new ConfigService(process.env);
 export { configService };
