@@ -8,6 +8,10 @@ import Role from 'src/user/enums/role.enum';
 import { ParseIntPipe, UseGuards } from '@nestjs/common';
 import { Video } from 'src/video/entities/video.entity';
 import { Live } from 'src/live/entities/live.entity';
+import { query } from 'express';
+import { PaginatedTagResponse } from './dto/paginated-tag.response';
+import { PaginateTagInput } from './dto/paginate-tag.input';
+import { PageInfo } from 'src/common/dto/page-info.response';
 
 @Resolver(() => Tag)
 export class TagResolver {
@@ -25,6 +29,26 @@ export class TagResolver {
   @UseGuards(RoleGuard(Role.Admin))
   findAll(): Promise<Tag[]> {
     return this.tagService.findAll();
+  }
+
+  @Query(() => PaginatedTagResponse, { name: 'paginatedTags' })
+  async findPaginatedTags(
+    @Args() options: PaginateTagInput,
+  ): Promise<PaginatedTagResponse> {
+    // links does not get used for the URLs, but rather to determine if there is a next page
+    const { items, links, meta } = await this.tagService.paginate({
+      limit: options.limit,
+      page: options.page,
+      route: '/',
+    });
+
+    return new PaginatedTagResponse(
+      meta.currentPage,
+      meta.totalItems,
+      meta.totalPages,
+      new PageInfo(links.next, links.previous),
+      items,
+    );
   }
 
   @Query(() => Tag, { name: 'tag' })

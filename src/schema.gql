@@ -96,6 +96,14 @@ type PaginatedVideoResponse {
   items: [Video!]
 }
 
+type PaginatedTagResponse {
+  currentPage: Float!
+  totalCount: Float!
+  totalPages: Float!
+  pageInfo: PageInfo!
+  items: [Tag!]
+}
+
 type Staff {
   id: Int!
   username: String!
@@ -132,6 +140,7 @@ type Query {
   comments: [Comment!]!
   comment(id: Int!): Comment!
   tags: [Tag!]!
+  paginatedTags(search: String = "", page: Int = 0, limit: Int = 25): PaginatedTagResponse!
   tag(id: Int!): Tag!
   staffs: [Staff!]!
   staff(id: Int!): Staff!

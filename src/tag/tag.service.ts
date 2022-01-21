@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import {
+  IPaginationOptions,
+  paginate,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
 import { Live } from 'src/live/entities/live.entity';
 import { Video } from 'src/video/entities/video.entity';
 import { Repository } from 'typeorm';
@@ -22,6 +27,10 @@ export class TagService {
 
   findAll(): Promise<Tag[]> {
     return this.tagRepository.find();
+  }
+
+  async paginate(options: IPaginationOptions): Promise<Pagination<Tag>> {
+    return await paginate<Tag>(this.tagRepository, options);
   }
 
   async findOne(id: number): Promise<Tag> {
