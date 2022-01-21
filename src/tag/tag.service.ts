@@ -26,11 +26,14 @@ export class TagService {
   }
 
   findAll(): Promise<Tag[]> {
-    return this.tagRepository.find();
+    return this.tagRepository.find({ order: { id: 'ASC' } });
   }
 
   async paginate(options: IPaginationOptions): Promise<Pagination<Tag>> {
-    return await paginate<Tag>(this.tagRepository, options);
+    const response = await paginate<Tag>(this.tagRepository, options, {
+      order: { id: 'ASC' },
+    });
+    return response;
   }
 
   async findOne(id: number): Promise<Tag> {
@@ -38,8 +41,12 @@ export class TagService {
   }
 
   async update(id: number, updateTagInput: UpdateTagInput): Promise<Tag> {
-    await this.tagRepository.update(id, updateTagInput);
-    return await this.tagRepository.findOne(id);
+    const updatedTag = await this.tagRepository.preload({
+      id,
+      ...updateTagInput,
+    });
+
+    return await this.tagRepository.save(updatedTag);
   }
 
   async remove(id: number): Promise<Tag> {
