@@ -66,17 +66,28 @@ export class Video {
   @IsDate()
   updatedAt?: Date;
 
-  @ManyToOne(() => User, (user) => user.videos, {
-    onDelete: 'CASCADE',
-  })
-  @Field((type) => User)
-  user: User;
-
   @OneToMany(() => Comment, (comment) => comment.video, {
     cascade: true,
   })
   @Field((type) => [Comment])
   comments: Comment[];
+
+  @ManyToMany(() => User, (user) => user.videos, {
+    cascade: true,
+  })
+  @JoinTable({
+    name: 'user_video',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'video_id',
+      referencedColumnName: 'id',
+    },
+  })
+  @Field((type) => [User])
+  users: User[];
 
   @ManyToMany(() => Tag, (tag) => tag.videos, { cascade: true })
   @JoinTable({

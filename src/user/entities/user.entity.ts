@@ -7,6 +7,8 @@ import {
   Entity,
   Column,
   BeforeInsert,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 import * as bcrypt from 'bcrypt';
@@ -72,9 +74,7 @@ export class User {
   @IsString()
   role: Role;
 
-  @OneToMany(() => Video, (video) => video.user, {
-    cascade: true,
-  })
+  @ManyToMany(() => Video, (video) => video.users)
   @Field(() => [Video])
   videos: Video[];
 

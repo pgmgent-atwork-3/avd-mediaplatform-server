@@ -2,15 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type LiveHistory {
+type Comment {
   id: Int!
-  title: String!
-  url: String!
-  thumbnail: String!
-  user: [User!]!
-  streamed_on: DateTime!
-  created_at: DateTime!
-  updated_at: DateTime!
+  content: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  user: User!
+  video: Video!
 }
 
 """
@@ -32,6 +30,12 @@ type Audio {
   tags: [Tag!]!
 }
 
+type Live {
+  title: String!
+  user: [User!]!
+  tags: [Tag!]
+}
+
 type Tag {
   id: Int!
   name: String!
@@ -40,10 +44,28 @@ type Tag {
   audios: [Audio!]
 }
 
-type Live {
+type Video {
+  id: Float!
   title: String!
+  description: String!
+  url: String!
+  thumbnail: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  comments: [Comment!]!
+  users: [User!]!
+  tags: [Tag!]!
+}
+
+type LiveHistory {
+  id: Int!
+  title: String!
+  url: String!
+  thumbnail: String!
   user: [User!]!
-  tags: [Tag!]
+  streamed_on: DateTime!
+  created_at: DateTime!
+  updated_at: DateTime!
 }
 
 type User {
@@ -59,28 +81,6 @@ type User {
   comments: [Comment!]!
   liveHistories: [LiveHistory!]!
   lives: [Live!]!
-}
-
-type Comment {
-  id: Int!
-  content: String!
-  createdAt: DateTime
-  updatedAt: DateTime
-  user: User!
-  video: Video!
-}
-
-type Video {
-  id: Float!
-  title: String!
-  description: String!
-  url: String!
-  thumbnail: String!
-  createdAt: DateTime
-  updatedAt: DateTime
-  user: User!
-  comments: [Comment!]!
-  tags: [Tag!]!
 }
 
 type PageInfo {
@@ -171,6 +171,7 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
+  addUserToVideo(videoId: Int!, userId: Int!): Video!
   createComment(createCommentInput: CreateCommentInput!): Comment!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
   removeComment(id: Int!): Comment!

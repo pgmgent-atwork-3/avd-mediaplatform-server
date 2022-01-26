@@ -11,6 +11,7 @@ import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { PaginatedUserResponse } from './dto/paginate-user.response';
 import { PaginateUserInput } from './dto/paginate-user.input';
 import { PageInfo } from 'src/common/dto/page-info.response';
+import { Video } from 'src/video/entities/video.entity';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -70,10 +71,28 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  // @UseGuards(RoleGuard(Role.Admin))
+  @UseGuards(RoleGuard(Role.Admin))
   removeUser(
     @Args('id', { type: () => Int }, ParseIntPipe) id: number,
   ): Promise<User> {
     return this.userService.remove(id);
+  }
+
+  // @Mutation(() => User)
+  // @UseGuards(RoleGuard(Role.Admin))
+  // async addVideoToUser(
+  //   @Args('userId', { type: () => Int }, ParseIntPipe) userId: number,
+  //   @Args('videoId', { type: () => Int }, ParseIntPipe) videoId: number,
+  // ): Promise<User> {
+  //   return this.userService.addVideoToUser(userId, videoId);
+  // }
+
+  @Mutation(() => Video)
+  @UseGuards(RoleGuard(Role.Admin))
+  async addUserToVideo(
+    @Args('userId', { type: () => Int }, ParseIntPipe) userId: number,
+    @Args('videoId', { type: () => Int }, ParseIntPipe) videoId: number,
+  ): Promise<Video> {
+    return await this.userService.addUserToVideo(videoId, userId);
   }
 }
