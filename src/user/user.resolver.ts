@@ -8,6 +8,9 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import RoleGuard from 'src/auth/role.guard';
 import Role from './enums/role.enum';
 import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
+import { PaginatedUserResponse } from './dto/paginate-user.response';
+import { PaginateUserInput } from './dto/paginate-user.input';
+import { PageInfo } from 'src/common/dto/page-info.response';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -24,6 +27,26 @@ export class UserResolver {
   @UseGuards(RoleGuard(Role.Admin))
   findAll(): Promise<User[]> {
     return this.userService.findAll();
+  }
+
+  @Query(() => PaginatedUserResponse, { name: 'paginatedUsers' })
+  async findPaginatedUsers(
+    @Args() options: PaginateUserInput,
+  ): Promise<PaginatedUserResponse> {
+    // links does not get used for the URLs, but rather to determine if there is a next page
+    const { items, links, meta } = await this.userService.paginate({
+      limit: options.limit,
+      page: options.page,
+      route: '/',
+    });
+
+    return new PaginatedUserResponse(
+      meta.currentPage,
+      meta.totalItems,
+      meta.totalPages,
+      new PageInfo(links.next, links.previous),
+      items,
+    );
   }
 
   @Query(() => User, { name: 'user' })

@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import {
+  IPaginationOptions,
+  paginate,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
 import { Repository } from 'typeorm';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -14,6 +19,12 @@ export class UserService {
   async create(createUserInput: CreateUserInput): Promise<User> {
     const user = this.userRepository.create(createUserInput);
     return await this.userRepository.save(user);
+  }
+
+  async paginate(options: IPaginationOptions): Promise<Pagination<User>> {
+    return await paginate<User>(this.userRepository, options, {
+      order: { id: 'ASC' },
+    });
   }
 
   async findAll(): Promise<User[]> {

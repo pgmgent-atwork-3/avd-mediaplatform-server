@@ -96,6 +96,14 @@ type PaginatedVideoResponse {
   items: [Video!]
 }
 
+type PaginatedUserResponse {
+  currentPage: Float!
+  totalCount: Float!
+  totalPages: Float!
+  pageInfo: PageInfo!
+  items: [User!]
+}
+
 type PaginatedTagResponse {
   currentPage: Float!
   totalCount: Float!
@@ -135,6 +143,7 @@ type Query {
   videos: [Video!]!
   video(id: Int!): Video!
   users: [User!]!
+  paginatedUsers(search: String = "", page: Int = 0, limit: Int = 25): PaginatedUserResponse!
   user(id: Int!): User!
   getUser: User!
   comments: [Comment!]!
