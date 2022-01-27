@@ -21,13 +21,11 @@ export class AudioResolver {
   }
 
   @Query(() => [Audio], { name: 'audios' })
-  @UseGuards(RoleGuard(Role.User))
   findAll(): Promise<Audio[]> {
     return this.audioService.findAll();
   }
 
   @Query(() => Audio, { name: 'audio' })
-  @UseGuards(RoleGuard(Role.User))
   findOne(
     @Args('id', { type: () => Int }, ParseIntPipe) id: number,
   ): Promise<Audio> {

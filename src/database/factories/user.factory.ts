@@ -18,6 +18,6 @@ define(User, (faker: any) => {
   user.password = 'pgm2021';
   user.profile_picture = `https://i.pravatar.cc/300`;
   user.role = Role.User;
-  user.videos = factory(Video)().makeMany(getRandomInt(1, 4)) as any;
+  // user.videos = factory(Video)().makeMany(getRandomInt(1, 4)) as any;
   return user;
 });
