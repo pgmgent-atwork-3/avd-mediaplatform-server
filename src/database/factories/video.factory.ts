@@ -3,6 +3,7 @@ import { Tag } from 'src/tag/entities/tag.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Video } from 'src/video/entities/video.entity';
 import { define, factory } from 'typeorm-seeding';
+import { getRandomInt } from './user.factory';
 
 export const makeid = (length: number): string => {
   var result = '';
@@ -21,7 +22,7 @@ define(Video, (faker: any) => {
   video.title = faker.lorem.sentence();
   video.description = faker.lorem.sentence();
   video.url = `https://youtube.com/${makeid(15)}`;
-  video.user = factory(User)() as any;
+  // video.users = factory(User)().makeMany(getRandomInt(1, 4)) as any;
   video.tags = factory(Tag)().makeMany(3) as any;
   // video.comments = factory(Comment)().makeMany(3) as any;
   video.thumbnail = 'https://picsum.photos/400/200';

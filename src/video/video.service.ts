@@ -1,20 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Tag } from 'src/tag/entities/tag.entity';
-import { Like, Repository } from 'typeorm';
+import {
+  IPaginationOptions,
+  paginate,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
+import { User } from 'src/user/entities/user.entity';
+import { Repository } from 'typeorm';
 import { CreateVideoInput } from './dto/create-video.input';
 import { UpdateVideoInput } from './dto/update-video.input';
 import { Video } from './entities/video.entity';
-import {
-  paginate,
-  IPaginationOptions,
-  Pagination,
-} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class VideoService {
   constructor(
     @InjectRepository(Video) private videoRepository: Repository<Video>,
+    @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
   create(createVideoInput: CreateVideoInput): Promise<Video> {
@@ -24,19 +25,21 @@ export class VideoService {
 
   async findAll(): Promise<Video[]> {
     return await this.videoRepository.find({
-      relations: ['tags', 'comments', 'user'],
+      relations: ['tags', 'comments', 'users'],
     });
   }
 
   async findOne(id: number): Promise<Video> {
     return await this.videoRepository.findOne(id, {
-      relations: ['tags', 'comments', 'user'],
+      relations: ['tags', 'comments', 'users'],
     });
   }
 
   async update(id: number, updateVideoInput: UpdateVideoInput): Promise<Video> {
     await this.videoRepository.update(id, updateVideoInput);
-    return await this.videoRepository.findOne(id);
+    return await this.videoRepository.findOne(id, {
+      relations: ['tags', 'comments', 'users'],
+    });
   }
 
   async remove(id: number): Promise<Video> {
@@ -46,7 +49,20 @@ export class VideoService {
 
   async paginate(options: IPaginationOptions): Promise<Pagination<Video>> {
     return await paginate<Video>(this.videoRepository, options, {
-      relations: ['tags', 'comments', 'user'],
+      relations: ['tags', 'comments', 'users'],
     });
   }
+
+  // async addUsersToVideo(videoId: number, userId: number): Promise<Video> {
+  //   let foundVideo = await this.videoRepository.findOne(
+  //     { id: videoId },
+  //     { relations: ['user'] },
+  //   );
+  //   let foundUser = await this.userRepository.findOne(
+  //     { id: userId },
+  //     { relations: ['videos'] },
+  //   );
+  //   foundVideo.user.push(foundUser);
+  //   return await this.videoRepository.save(foundVideo);
+  // }
 }

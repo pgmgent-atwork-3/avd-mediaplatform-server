@@ -9,6 +9,8 @@ import RoleGuard from 'src/auth/role.guard';
 import Role from 'src/user/enums/role.enum';
 import { PaginateVideoInput } from './dto/paginate-video.input';
 import { PageInfo } from 'src/common/dto/page-info.response';
+import { User } from 'src/user/entities/user.entity';
+import { CreateUserInput } from 'src/user/dto/create-user.input';
 
 @Resolver(() => Video)
 export class VideoResolver {
@@ -69,4 +71,13 @@ export class VideoResolver {
   ): Promise<Video> {
     return this.videoService.remove(id);
   }
+
+  // @Mutation(() => Video)
+  // @UseGuards(RoleGuard(Role.Admin))
+  // addUserToVideo(
+  //   @Args('videoId', { type: () => Int }, ParseIntPipe) videoId: number,
+  //   @Args('userId', { type: () => Int }, ParseIntPipe) userId: number,
+  // ): Promise<Video> {
+  //   return this.videoService.addUserToVideo(videoId, userId);
+  // }
 }
