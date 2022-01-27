@@ -10,6 +10,8 @@ async function bootstrap() {
       'http://localhost:3001',
       'https://studio.apollographql.com',
       'https://avdtvclient.onrender.com',
+      'https://avd-mediaplatform-client-git-develop-avd-server.vercel.app/',
+      'https://avd-mediaplatform-client.vercel.app/',
     ],
     credentials: true,
   };

@@ -33,7 +33,10 @@ export class LiveHistory {
   @IsAlphanumeric()
   thumbnail: string;
 
-  @ManyToOne(() => User, (user) => user.liveHistories)
+  @ManyToOne(() => User, (user) => user.liveHistories, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'userId' })
   @Field(() => [User])
   user: User;
