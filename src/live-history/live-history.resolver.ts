@@ -21,13 +21,11 @@ export class LiveHistoryResolver {
   }
 
   @Query(() => [LiveHistory], { name: 'liveHistories' })
-  @UseGuards(RoleGuard(Role.User))
   findAll(): Promise<LiveHistory[]> {
     return this.liveHistoryService.findAll();
   }
 
   @Query(() => LiveHistory, { name: 'liveHistory' })
-  @UseGuards(RoleGuard(Role.User))
   findOne(
     @Args('id', { type: () => Int }, ParseIntPipe) id: number,
   ): Promise<LiveHistory> {

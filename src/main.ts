@@ -14,6 +14,7 @@ async function bootstrap() {
       'https://avd-mediaplatform-client.vercel.app',
     ],
     credentials: true,
+    AllowedHeaders: ['Content-Type', 'Authorization'],
   };
 
   // Enable CORS for all routes
